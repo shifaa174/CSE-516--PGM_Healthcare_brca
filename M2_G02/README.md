@@ -116,4 +116,6 @@ and the latent-dimension finding are in `Results/SUMMARY.md`.
   scored once per configuration.
 - Configuration and environment are written into every results JSON.
 - Verified by a clean-copy run: `bash run_all.sh ../..` reproduces every
-  number in `Results/` exactly.
+  number in `Results/`. On a different machine, C-index values can differ
+  in the second decimal place due to numerical-library differences;
+  log-likelihoods and all conclusions are unchanged.

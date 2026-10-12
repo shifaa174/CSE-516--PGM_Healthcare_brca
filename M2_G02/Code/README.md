@@ -61,7 +61,9 @@ python3 make_figures.py ../../Results
 | Cox PH | deterministic (L-BFGS from a zero start) |
 | Data splits | fixed, shipped with the base paper — not resampled |
 
-Re-running with the same seed reproduces every number exactly. The seed and
+Re-running with the same seed on the same machine reproduces every number
+exactly. Across machines, C-index values can differ in the second decimal
+place due to numerical-library differences; conclusions are unchanged. The seed and
 the full configuration are written into each results JSON under `config`.
 
 ## Command-line options

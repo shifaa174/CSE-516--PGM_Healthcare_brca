@@ -1,6 +1,6 @@
 {
   "config": {
-    "root": "/home/claude/basedata",
+    "root": "/Users/paarthjawaharani/CSE-516--PGM_Healthcare_brca",
     "variant": "pca",
     "noise": "block",
     "grid": [
@@ -20,460 +20,460 @@
     "penalizer": 0.1,
     "em_iters": 120,
     "seed": 42,
-    "out": "/home/claude/M2_G02/Results"
+    "out": "/Users/paarthjawaharani/CSE-516--PGM_Healthcare_brca/M2_G02/Results"
   },
   "rows": [
     {
       "fold": 0,
       "d": 2,
       "method": "cca-mle",
-      "valid_loglik_per_sample": 89.35859697910115,
-      "test_loglik_per_sample": 96.30828881512764,
+      "valid_loglik_per_sample": 89.35859697910132,
+      "test_loglik_per_sample": 96.30828881512795,
       "test_c_index": 0.4387056627255756
     },
     {
       "fold": 0,
       "d": 2,
       "method": "em",
-      "valid_loglik_per_sample": 248.00777633761277,
-      "test_loglik_per_sample": 277.88976429097033,
-      "test_c_index": 0.6241443683883012
+      "valid_loglik_per_sample": 248.00777633755237,
+      "test_loglik_per_sample": 277.88976429098017,
+      "test_c_index": 0.6247666459240822
     },
     {
       "fold": 0,
       "d": 5,
       "method": "cca-mle",
-      "valid_loglik_per_sample": 89.2989395630946,
-      "test_loglik_per_sample": 96.36243051363131,
-      "test_c_index": 0.6851275668948351
+      "valid_loglik_per_sample": 89.29893956309547,
+      "test_loglik_per_sample": 96.36243051363209,
+      "test_c_index": 0.686372121966397
     },
     {
       "fold": 0,
       "d": 5,
       "method": "em",
-      "valid_loglik_per_sample": 246.14508127964405,
-      "test_loglik_per_sample": 275.572339953984,
-      "test_c_index": 0.5575606720597387
+      "valid_loglik_per_sample": 246.1450812796136,
+      "test_loglik_per_sample": 275.5723399539994,
+      "test_c_index": 0.5600497822028625
     },
     {
       "fold": 0,
       "d": 10,
       "method": "cca-mle",
-      "valid_loglik_per_sample": 88.64713507437783,
-      "test_loglik_per_sample": 95.89185044022537,
-      "test_c_index": 0.6285003111387679
+      "valid_loglik_per_sample": 88.64713507437874,
+      "test_loglik_per_sample": 95.89185044022624,
+      "test_c_index": 0.6334785314250155
     },
     {
       "fold": 0,
       "d": 10,
       "method": "em",
-      "valid_loglik_per_sample": 242.3959937131,
-      "test_loglik_per_sample": 271.1923546698002,
+      "valid_loglik_per_sample": 242.39599371275258,
+      "test_loglik_per_sample": 271.1923546701692,
       "test_c_index": 0.5874299937772246
     },
     {
       "fold": 0,
       "d": 20,
       "method": "cca-mle",
-      "valid_loglik_per_sample": 87.49764674180108,
-      "test_loglik_per_sample": 95.04401477277692,
-      "test_c_index": 0.6689483509645302
+      "valid_loglik_per_sample": 87.4976467418019,
+      "test_loglik_per_sample": 95.04401477277771,
+      "test_c_index": 0.670192906036092
     },
     {
       "fold": 0,
       "d": 20,
       "method": "em",
-      "valid_loglik_per_sample": 234.86009743381484,
-      "test_loglik_per_sample": 264.898252494901,
-      "test_c_index": 0.64281269446173
+      "valid_loglik_per_sample": 234.8600974338148,
+      "test_loglik_per_sample": 264.8982524948698,
+      "test_c_index": 0.641568139390168
     },
     {
       "fold": 0,
       "d": 30,
       "method": "cca-mle",
-      "valid_loglik_per_sample": 86.98078724602848,
-      "test_loglik_per_sample": 94.56361065474178,
-      "test_c_index": 0.7342874922215308
+      "valid_loglik_per_sample": 86.98078724602898,
+      "test_loglik_per_sample": 94.56361065474216,
+      "test_c_index": 0.7355320472930927
     },
     {
       "fold": 0,
       "d": 30,
       "method": "em",
-      "valid_loglik_per_sample": 230.41921609343552,
-      "test_loglik_per_sample": 261.5249684862756,
+      "valid_loglik_per_sample": 230.4192160936825,
+      "test_loglik_per_sample": 261.52496848618335,
       "test_c_index": 0.5451151213441194
     },
     {
       "fold": 1,
       "d": 2,
       "method": "cca-mle",
-      "valid_loglik_per_sample": 87.62789380545969,
-      "test_loglik_per_sample": 93.2451845919159,
-      "test_c_index": 0.45496323529411764
+      "valid_loglik_per_sample": 87.62789380546054,
+      "test_loglik_per_sample": 93.24518459191668,
+      "test_c_index": 0.45588235294117646
     },
     {
       "fold": 1,
       "d": 2,
       "method": "em",
-      "valid_loglik_per_sample": 242.71946012766836,
-      "test_loglik_per_sample": 265.8410860350785,
-      "test_c_index": 0.5101102941176471
+      "valid_loglik_per_sample": 242.7194601277613,
+      "test_loglik_per_sample": 265.8410860351132,
+      "test_c_index": 0.5110294117647058
     },
     {
       "fold": 1,
       "d": 5,
       "method": "cca-mle",
-      "valid_loglik_per_sample": 87.37988357697402,
-      "test_loglik_per_sample": 93.23150430059444,
-      "test_c_index": 0.6351102941176471
+      "valid_loglik_per_sample": 87.37988357697441,
+      "test_loglik_per_sample": 93.23150430059465,
+      "test_c_index": 0.6360294117647058
     },
     {
       "fold": 1,
       "d": 5,
       "method": "em",
-      "valid_loglik_per_sample": 239.88699034652865,
-      "test_loglik_per_sample": 263.48315338637275,
-      "test_c_index": 0.5652573529411765
+      "valid_loglik_per_sample": 239.8869903466651,
+      "test_loglik_per_sample": 263.48315338656244,
+      "test_c_index": 0.5661764705882353
     },
     {
       "fold": 1,
       "d": 10,
       "method": "cca-mle",
-      "valid_loglik_per_sample": 87.00454321978775,
-      "test_loglik_per_sample": 93.02588920254642,
-      "test_c_index": 0.7196691176470589
+      "valid_loglik_per_sample": 87.00454321978752,
+      "test_loglik_per_sample": 93.02588920254637,
+      "test_c_index": 0.71875
     },
     {
       "fold": 1,
       "d": 10,
       "method": "em",
-      "valid_loglik_per_sample": 235.05247192754612,
-      "test_loglik_per_sample": 259.41479254827055,
-      "test_c_index": 0.8115808823529411
+      "valid_loglik_per_sample": 235.05247192760382,
+      "test_loglik_per_sample": 259.41479254809565,
+      "test_c_index": 0.8097426470588235
     },
     {
       "fold": 1,
       "d": 20,
       "method": "cca-mle",
-      "valid_loglik_per_sample": 86.15357251336943,
-      "test_loglik_per_sample": 92.50204100813625,
-      "test_c_index": 0.8069852941176471
+      "valid_loglik_per_sample": 86.1535725133701,
+      "test_loglik_per_sample": 92.50204100813681,
+      "test_c_index": 0.8088235294117647
     },
     {
       "fold": 1,
       "d": 20,
       "method": "em",
-      "valid_loglik_per_sample": 229.12502890110966,
-      "test_loglik_per_sample": 254.43433326984825,
+      "valid_loglik_per_sample": 229.12502890087848,
+      "test_loglik_per_sample": 254.43433326980036,
       "test_c_index": 0.7196691176470589
     },
     {
       "fold": 1,
       "d": 30,
       "method": "cca-mle",
-      "valid_loglik_per_sample": 85.56761939177923,
-      "test_loglik_per_sample": 92.09918494514217,
-      "test_c_index": 0.7049632352941176
+      "valid_loglik_per_sample": 85.56761939177943,
+      "test_loglik_per_sample": 92.09918494514224,
+      "test_c_index": 0.7040441176470589
     },
     {
       "fold": 1,
       "d": 30,
       "method": "em",
-      "valid_loglik_per_sample": 225.2018136493338,
-      "test_loglik_per_sample": 250.4279066984729,
-      "test_c_index": 0.7665441176470589
+      "valid_loglik_per_sample": 225.20181364971882,
+      "test_loglik_per_sample": 250.4279066987695,
+      "test_c_index": 0.7674632352941176
     },
     {
       "fold": 2,
       "d": 2,
       "method": "cca-mle",
-      "valid_loglik_per_sample": 95.90779001709653,
-      "test_loglik_per_sample": 94.17724150288736,
+      "valid_loglik_per_sample": 95.90779001709677,
+      "test_loglik_per_sample": 94.17724150288767,
       "test_c_index": 0.6163424124513619
     },
     {
       "fold": 2,
       "d": 2,
       "method": "em",
-      "valid_loglik_per_sample": 271.176083178192,
-      "test_loglik_per_sample": 258.3299632864484,
-      "test_c_index": 0.6521400778210117
+      "valid_loglik_per_sample": 271.17608317815746,
+      "test_loglik_per_sample": 258.32996328644214,
+      "test_c_index": 0.6490272373540856
     },
     {
       "fold": 2,
       "d": 5,
       "method": "cca-mle",
-      "valid_loglik_per_sample": 95.94436438110974,
-      "test_loglik_per_sample": 94.10931982117215,
-      "test_c_index": 0.5618677042801556
+      "valid_loglik_per_sample": 95.94436438111012,
+      "test_loglik_per_sample": 94.1093198211724,
+      "test_c_index": 0.5595330739299611
     },
     {
       "fold": 2,
       "d": 5,
       "method": "em",
-      "valid_loglik_per_sample": 269.0034345731193,
-      "test_loglik_per_sample": 256.0593246140967,
-      "test_c_index": 0.5898832684824903
+      "valid_loglik_per_sample": 269.003434572832,
+      "test_loglik_per_sample": 256.05932461394934,
+      "test_c_index": 0.5906614785992218
     },
     {
       "fold": 2,
       "d": 10,
       "method": "cca-mle",
-      "valid_loglik_per_sample": 95.77184182349043,
-      "test_loglik_per_sample": 93.95242809211558,
-      "test_c_index": 0.6731517509727627
+      "valid_loglik_per_sample": 95.7718418234907,
+      "test_loglik_per_sample": 93.95242809211594,
+      "test_c_index": 0.667704280155642
     },
     {
       "fold": 2,
       "d": 10,
       "method": "em",
-      "valid_loglik_per_sample": 265.7252826822306,
-      "test_loglik_per_sample": 251.96519647296878,
-      "test_c_index": 0.5852140077821012
+      "valid_loglik_per_sample": 265.7252826826236,
+      "test_loglik_per_sample": 251.96519647308605,
+      "test_c_index": 0.5859922178988327
     },
     {
       "fold": 2,
       "d": 20,
       "method": "cca-mle",
-      "valid_loglik_per_sample": 95.0187038469017,
-      "test_loglik_per_sample": 93.13626427311664,
-      "test_c_index": 0.5330739299610895
+      "valid_loglik_per_sample": 95.0187038469018,
+      "test_loglik_per_sample": 93.13626427311685,
+      "test_c_index": 0.5315175097276265
     },
     {
       "fold": 2,
       "d": 20,
       "method": "em",
-      "valid_loglik_per_sample": 260.07094239600974,
-      "test_loglik_per_sample": 245.9992889900076,
-      "test_c_index": 0.554863813229572
+      "valid_loglik_per_sample": 260.07094239578316,
+      "test_loglik_per_sample": 245.99928899014776,
+      "test_c_index": 0.5525291828793775
     },
     {
       "fold": 2,
       "d": 30,
       "method": "cca-mle",
-      "valid_loglik_per_sample": 94.66835416850944,
-      "test_loglik_per_sample": 92.53254085819765,
-      "test_c_index": 0.5392996108949416
+      "valid_loglik_per_sample": 94.66835416850977,
+      "test_loglik_per_sample": 92.53254085819792,
+      "test_c_index": 0.5369649805447471
     },
     {
       "fold": 2,
       "d": 30,
       "method": "em",
-      "valid_loglik_per_sample": 256.65409951512873,
-      "test_loglik_per_sample": 241.85201703627337,
-      "test_c_index": 0.6793774319066148
+      "valid_loglik_per_sample": 256.65409951486373,
+      "test_loglik_per_sample": 241.85201703592026,
+      "test_c_index": 0.6770428015564203
     },
     {
       "fold": 3,
       "d": 2,
       "method": "cca-mle",
-      "valid_loglik_per_sample": 95.08119361375205,
-      "test_loglik_per_sample": 89.5277067110352,
+      "valid_loglik_per_sample": 95.08119361375293,
+      "test_loglik_per_sample": 89.52770671103598,
       "test_c_index": 0.6852825229960579
     },
     {
       "fold": 3,
       "d": 2,
       "method": "em",
-      "valid_loglik_per_sample": 262.6537717289078,
-      "test_loglik_per_sample": 242.48107399392381,
-      "test_c_index": 0.6741130091984231
+      "valid_loglik_per_sample": 262.65377172890464,
+      "test_loglik_per_sample": 242.4810739939046,
+      "test_c_index": 0.6747700394218134
     },
     {
       "fold": 3,
       "d": 5,
       "method": "cca-mle",
-      "valid_loglik_per_sample": 95.02866330469912,
-      "test_loglik_per_sample": 89.43825861070916,
+      "valid_loglik_per_sample": 95.02866330469871,
+      "test_loglik_per_sample": 89.43825861070862,
       "test_c_index": 0.735873850197109
     },
     {
       "fold": 3,
       "d": 5,
       "method": "em",
-      "valid_loglik_per_sample": 260.23685986038436,
-      "test_loglik_per_sample": 240.48780025595198,
+      "valid_loglik_per_sample": 260.2368598607106,
+      "test_loglik_per_sample": 240.48780025581965,
       "test_c_index": 0.6544021024967148
     },
     {
       "fold": 3,
       "d": 10,
       "method": "cca-mle",
-      "valid_loglik_per_sample": 94.61508621026996,
-      "test_loglik_per_sample": 89.10664303889911,
+      "valid_loglik_per_sample": 94.61508621027077,
+      "test_loglik_per_sample": 89.10664303889988,
       "test_c_index": 0.7279894875164258
     },
     {
       "fold": 3,
       "d": 10,
       "method": "em",
-      "valid_loglik_per_sample": 255.81926853721967,
-      "test_loglik_per_sample": 235.86668795722892,
+      "valid_loglik_per_sample": 255.8192685371661,
+      "test_loglik_per_sample": 235.86668795724077,
       "test_c_index": 0.6767411300919842
     },
     {
       "fold": 3,
       "d": 20,
       "method": "cca-mle",
-      "valid_loglik_per_sample": 93.92533457525639,
-      "test_loglik_per_sample": 88.40732300511758,
-      "test_c_index": 0.7332457293035479
+      "valid_loglik_per_sample": 93.92533457525599,
+      "test_loglik_per_sample": 88.40732300511704,
+      "test_c_index": 0.7339027595269383
     },
     {
       "fold": 3,
       "d": 20,
       "method": "em",
-      "valid_loglik_per_sample": 250.27472274863467,
-      "test_loglik_per_sample": 229.9541755172376,
+      "valid_loglik_per_sample": 250.2747227486319,
+      "test_loglik_per_sample": 229.95417551709514,
       "test_c_index": 0.6274638633377135
     },
     {
       "fold": 3,
       "d": 30,
       "method": "cca-mle",
-      "valid_loglik_per_sample": 93.45469577433043,
-      "test_loglik_per_sample": 87.91532290902299,
+      "valid_loglik_per_sample": 93.45469577433018,
+      "test_loglik_per_sample": 87.9153229090228,
       "test_c_index": 0.6544021024967148
     },
     {
       "fold": 3,
       "d": 30,
       "method": "em",
-      "valid_loglik_per_sample": 246.73924548490197,
-      "test_loglik_per_sample": 225.58635880870736,
-      "test_c_index": 0.6130091984231275
+      "valid_loglik_per_sample": 246.73924548471345,
+      "test_loglik_per_sample": 225.58635880845213,
+      "test_c_index": 0.6123521681997371
     },
     {
       "fold": 4,
       "d": 2,
       "method": "cca-mle",
-      "valid_loglik_per_sample": 93.9835053436837,
-      "test_loglik_per_sample": 96.79746763295125,
+      "valid_loglik_per_sample": 93.98350534368424,
+      "test_loglik_per_sample": 96.7974676329518,
       "test_c_index": 0.39011799410029496
     },
     {
       "fold": 4,
       "d": 2,
       "method": "em",
-      "valid_loglik_per_sample": 271.67507409413014,
-      "test_loglik_per_sample": 283.1390884921587,
-      "test_c_index": 0.6873156342182891
+      "valid_loglik_per_sample": 271.675074094218,
+      "test_loglik_per_sample": 283.13908849206825,
+      "test_c_index": 0.6880530973451328
     },
     {
       "fold": 4,
       "d": 5,
       "method": "cca-mle",
-      "valid_loglik_per_sample": 93.94058554478777,
-      "test_loglik_per_sample": 97.02841947228221,
+      "valid_loglik_per_sample": 93.94058554478694,
+      "test_loglik_per_sample": 97.02841947228114,
       "test_c_index": 0.6651917404129793
     },
     {
       "fold": 4,
       "d": 5,
       "method": "em",
-      "valid_loglik_per_sample": 268.8198234502918,
-      "test_loglik_per_sample": 281.72385109479217,
-      "test_c_index": 0.721976401179941
+      "valid_loglik_per_sample": 268.81982345041854,
+      "test_loglik_per_sample": 281.7238510948027,
+      "test_c_index": 0.7212389380530974
     },
     {
       "fold": 4,
       "d": 10,
       "method": "cca-mle",
-      "valid_loglik_per_sample": 93.64563110547648,
-      "test_loglik_per_sample": 96.78510339395763,
+      "valid_loglik_per_sample": 93.64563110547573,
+      "test_loglik_per_sample": 96.78510339395682,
       "test_c_index": 0.5966076696165191
     },
     {
       "fold": 4,
       "d": 10,
       "method": "em",
-      "valid_loglik_per_sample": 265.2025678574737,
-      "test_loglik_per_sample": 278.5296398619325,
+      "valid_loglik_per_sample": 265.20256785722836,
+      "test_loglik_per_sample": 278.5296398621784,
       "test_c_index": 0.6902654867256637
     },
     {
       "fold": 4,
       "d": 20,
       "method": "cca-mle",
-      "valid_loglik_per_sample": 93.02337753664378,
-      "test_loglik_per_sample": 95.98591057199151,
+      "valid_loglik_per_sample": 93.02337753664462,
+      "test_loglik_per_sample": 95.9859105719924,
       "test_c_index": 0.5530973451327433
     },
     {
       "fold": 4,
       "d": 20,
       "method": "em",
-      "valid_loglik_per_sample": 259.57139197277286,
-      "test_loglik_per_sample": 273.4498838024547,
-      "test_c_index": 0.6150442477876106
+      "valid_loglik_per_sample": 259.57139197274466,
+      "test_loglik_per_sample": 273.4498838023975,
+      "test_c_index": 0.6157817109144543
     },
     {
       "fold": 4,
       "d": 30,
       "method": "cca-mle",
-      "valid_loglik_per_sample": 92.68565442170735,
-      "test_loglik_per_sample": 95.46265623768636,
+      "valid_loglik_per_sample": 92.68565442170767,
+      "test_loglik_per_sample": 95.46265623768659,
       "test_c_index": 0.5715339233038348
     },
     {
       "fold": 4,
       "d": 30,
       "method": "em",
-      "valid_loglik_per_sample": 255.80176735121634,
-      "test_loglik_per_sample": 269.5417609734368,
-      "test_c_index": 0.5612094395280236
+      "valid_loglik_per_sample": 255.80176735109495,
+      "test_loglik_per_sample": 269.5417609732092,
+      "test_c_index": 0.5619469026548672
     }
   ],
   "summary": {
     "cca-mle/d=2": {
       "valid_loglik_mean": 92.392,
-      "c_index_mean": 51.71,
-      "c_index_std": 11.34
+      "c_index_mean": 51.73,
+      "c_index_std": 11.33
     },
     "cca-mle/d=5": {
       "valid_loglik_mean": 92.318,
       "c_index_mean": 65.66,
-      "c_index_std": 5.76
+      "c_index_std": 5.85
     },
     "cca-mle/d=10": {
       "valid_loglik_mean": 91.937,
-      "c_index_mean": 66.92,
-      "c_index_std": 5.09
+      "c_index_mean": 66.89,
+      "c_index_std": 4.99
     },
     "cca-mle/d=20": {
       "valid_loglik_mean": 91.124,
-      "c_index_mean": 65.91,
-      "c_index_std": 10.45
+      "c_index_mean": 65.95,
+      "c_index_std": 10.55
     },
     "cca-mle/d=30": {
       "valid_loglik_mean": 90.671,
-      "c_index_mean": 64.09,
-      "c_index_std": 7.5
+      "c_index_mean": 64.05,
+      "c_index_std": 7.58
     },
     "em/d=2": {
       "valid_loglik_mean": 259.246,
-      "c_index_mean": 62.96,
-      "c_index_std": 6.34
+      "c_index_mean": 62.95,
+      "c_index_std": 6.31
     },
     "em/d=5": {
       "valid_loglik_mean": 256.818,
-      "c_index_mean": 61.78,
-      "c_index_std": 6.22
+      "c_index_mean": 61.85,
+      "c_index_std": 6.13
     },
     "em/d=10": {
       "valid_loglik_mean": 252.839,
-      "c_index_mean": 67.02,
-      "c_index_std": 8.31
+      "c_index_mean": 67.0,
+      "c_index_std": 8.23
     },
     "em/d=20": {
       "valid_loglik_mean": 246.78,
-      "c_index_mean": 63.2,
-      "c_index_std": 5.3
+      "c_index_mean": 63.14,
+      "c_index_std": 5.36
     },
     "em/d=30": {
       "valid_loglik_mean": 242.963,
-      "c_index_mean": 63.31,
-      "c_index_std": 8.16
+      "c_index_mean": 63.28,
+      "c_index_std": 8.15
     }
   }
 }
