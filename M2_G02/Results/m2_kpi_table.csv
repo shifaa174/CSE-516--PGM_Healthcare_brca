@@ -1,0 +1,24 @@
+KPI,configuration,mean,std,per_fold
+C-index (%),cca-mle/multimodal,66.918,5.088,62.85 / 71.97 / 67.31 / 72.80 / 59.66
+C-index (%),cca-mle/genomics_only,72.108,6.745,71.87 / 81.53 / 77.59 / 63.99 / 65.56
+C-index (%),cca-mle/histology_only,57.885,6.921,52.33 / 51.01 / 63.50 / 68.59 / 53.98
+C-index (%),em/multimodal,67.603,7.814,62.35 / 81.34 / 58.21 / 67.67 / 68.44
+C-index (%),em/genomics_only,72.051,6.219,70.44 / 84.01 / 67.86 / 71.35 / 66.59
+C-index (%),em/histology_only,60.265,5.981,50.03 / 63.97 / 60.47 / 58.94 / 67.92
+C-index (%),baseline_pca_concat,69.781,6.338,65.84 / 76.29 / 68.48 / 77.53 / 60.77
+C-index (%),baseline_pca_genomics,67.805,7.33,79.28 / 69.67 / 57.20 / 69.38 / 63.50
+C-index (%),baseline_pca_histology,62.721,8.509,51.96 / 63.42 / 65.29 / 76.74 / 56.20
+train log-lik / sample,cca-mle,106.274,0.78,106.52 / 106.07 / 107.62 / 105.84 / 105.31
+test log-lik / sample,cca-mle,93.752,2.681,95.89 / 93.03 / 93.95 / 89.11 / 96.78
+fit seconds,cca-mle,0.11,0.134,0.04 / 0.05 / 0.38 / 0.04 / 0.04
+EM/CCA iterations,cca-mle,1.0,0.0,1.00 / 1.00 / 1.00 / 1.00 / 1.00
+posterior entropy (nats),cca-mle/multimodal,6.994,0.088,6.86 / 6.93 / 7.01 / 7.09 / 7.08
+posterior entropy (nats),cca-mle/genomics_only,9.364,0.071,9.26 / 9.31 / 9.38 / 9.44 / 9.43
+posterior entropy (nats),cca-mle/histology_only,9.364,0.071,9.26 / 9.31 / 9.38 / 9.44 / 9.43
+train log-lik / sample,em,338.058,1.883,339.01 / 337.58 / 341.03 / 337.28 / 335.39
+test log-lik / sample,em,259.196,14.764,270.76 / 259.25 / 251.95 / 235.87 / 278.15
+fit seconds,em,19.784,7.888,26.70 / 25.95 / 12.19 / 8.31 / 25.77
+EM/CCA iterations,em,222.0,96.728,300.00 / 300.00 / 129.00 / 81.00 / 300.00
+posterior entropy (nats),em/multimodal,0.417,1.237,-0.90 / -0.59 / 1.72 / 2.09 / -0.23
+posterior entropy (nats),em/genomics_only,2.213,2.476,-0.03 / 0.12 / 4.25 / 6.05 / 0.68
+posterior entropy (nats),em/histology_only,7.727,1.186,8.49 / 8.78 / 6.98 / 5.74 / 8.64
