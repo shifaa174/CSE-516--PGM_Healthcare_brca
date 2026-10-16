@@ -1,38 +1,10 @@
-"""
-run_experiments.py -- M2 experiment driver.
-===============================================================================
-Runs the full pipeline end to end on all folds and writes every KPI to JSON.
-
-    data -> pCCA model -> {CCA-MLE, EM} -> latent inference -> Cox PH -> C-index
-
-KPIs produced (as defined in the M1 report):
-  LEARNING        held-out log-likelihood per sample; EM iterations to
-                  convergence; monotonicity of the likelihood trace; fit time
-  REPRESENTATION  canonical correlation spectrum; selected latent dimension d
-  INFERENCE       posterior entropy under {both, genomics-only, histology-only}
-  DOWNSTREAM      C-index, mean +/- sd over folds, for every method x setting
-  BASELINES       PCA-concat / PCA-genomics / PCA-histology + Cox PH
-
-Usage
------
-    python run_experiments.py --root <repo containing 03_brca/> \
-                              --variant pca --out ../../Results
-
-    --variant pca        50 genomic PCs + 215 histology PCs   (fast, default)
-    --variant histogram  1000 genes + 1075 histology features (slow)
-    --noise  block|diag  within-modality noise structure
-    --select-d           choose d on the validation split by log-likelihood
-
-Reproducibility: every random element is seeded from --seed (EM init uses
-seed + fold). The run configuration is written into the output JSON.
-"""
 import argparse, json, os, platform, sys, time
 import numpy as np
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from data import load_fold, standardise           # noqa: E402
-from pcca import ProbabilisticCCA                 # noqa: E402
-from survival import CoxPH, c_index               # noqa: E402
+from data import load_fold, standardise
+from pcca import ProbabilisticCCA
+from survival import CoxPH, c_index
 
 SETTINGS = {"multimodal":     ("X", "Y"),
             "genomics_only":  ("X",),
@@ -45,7 +17,7 @@ def downstream_cindex(Ztr, tr, Zte, te, penalizer):
 
 
 def select_latent_dim(tr, va, grid, args):
-    """Structural hyperparameter selection on the VALIDATION split only."""
+
     scores = {}
     for d in grid:
         m = ProbabilisticCCA(d=d, reg=args.reg, random_state=args.seed,
@@ -70,14 +42,18 @@ def run_fold(args, fold):
            "event_rate_train": float(tr["events"].mean()),
            "event_rate_test":  float(te["events"].mean())}
 
-    d = args.d
+    dims = {"cca-mle": args.d, "em": args.d}
+    if args.d_from:
+        dims.update({k: int(v) for k, v in json.load(open(args.d_from, encoding="utf-8"))["chosen_d"].items()})
     if args.select_d:
         d, curve = select_latent_dim(tr, va, args.d_grid, args)
+        dims = {"cca-mle": d, "em": d}
         res["latent_dim_selection"] = {"chosen": int(d),
                                        "val_loglik_per_sample": curve}
-    res["latent_dim"] = int(d)
+    res["latent_dim"] = {k: int(v) for k, v in dims.items()}
 
     for method in ("cca-mle", "em"):
+        d = dims[method]
         m = ProbabilisticCCA(d=d, reg=args.reg, random_state=args.seed + fold,
                              noise=args.noise)
         t0 = time.time()
@@ -91,7 +67,8 @@ def run_fold(args, fold):
         trace = [float(x) for x in m.loglik_trace_]
         monotone = all(b >= a - 1e-6 for a, b in zip(trace, trace[1:]))
 
-        blk = {"fit_seconds": round(fit_s, 3),
+        blk = {"latent_dim": int(d),
+               "fit_seconds": round(fit_s, 3),
                "n_iter": int(m.n_iter_),
                "loglik_monotone": bool(monotone),
                "train_loglik_per_sample": m.score_per_sample(tr["X"], tr["Y"]),
@@ -116,7 +93,6 @@ def run_fold(args, fold):
         blk["inference_seconds"] = round(time.time() - t0, 3)
         res[method] = blk
 
-    # ---- non-PGM baselines, identical conditions ----
     res["baseline_pca_concat"] = downstream_cindex(
         np.hstack([tr["X"], tr["Y"]]), tr,
         np.hstack([te["X"], te["Y"]]), te, args.penalizer)
@@ -160,11 +136,13 @@ def main():
     ap = argparse.ArgumentParser(description="M2 pipeline, Group G02")
     ap.add_argument("--root", required=True,
                     help="repository root containing 03_brca/")
-    ap.add_argument("--variant", default="pca", choices=["pca", "histogram"])
+    ap.add_argument("--variant", default="pca", choices=["pca", "histogram", "paperpca", "loghist"])
     ap.add_argument("--noise", default="block", choices=["block", "diag"])
     ap.add_argument("--out", default="../../Results")
     ap.add_argument("--folds", type=int, nargs="+", default=[0, 1, 2, 3, 4])
     ap.add_argument("--d", type=int, default=10, help="latent dimension")
+    ap.add_argument("--d-from", default=None,
+                    help="sweep JSON whose validation-chosen d is used per route")
     ap.add_argument("--select-d", action="store_true",
                     help="select d on the validation split")
     ap.add_argument("--d-grid", type=int, nargs="+",
@@ -198,7 +176,7 @@ def main():
     }
     tag = args.tag or f"{args.variant}_{args.noise}"
     path = os.path.join(out, f"m2_results_{tag}.json")
-    with open(path, "w") as fh:
+    with open(path, "w", encoding="utf-8") as fh:
         json.dump(payload, fh, indent=2)
 
     print("\n=== C-index (mean +/- sd over folds, %) ===")

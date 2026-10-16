@@ -5,117 +5,111 @@
 **Track:** Applied AI
 **Group G02:** Dhanya Achari (AU2420163) · Parth Jawaharani (AU2420056) · Shifataj Shaikh (AU2420174) · Vishrut Patel (AU2340216)
 
+**Base paper:** V. Subramanian, T. Syeda-Mahmood, M. N. Do, "Modelling-based joint embedding of histology and genomics using canonical correlation analysis for breast cancer survival prediction," *Artificial Intelligence in Medicine* 149:102787, 2024. Code and data: https://github.com/svaishnavi411/modelling_cca_brca_survival
+
 ---
 
 ## What exists at M2
 
-The model from M1 is now code, the pipeline runs end to end on all five folds,
-both learning routes are implemented, inference produces output, the baseline
-runs under identical conditions, and the first KPI numbers are on the board.
+The pipeline runs end to end on all five folds, on the paper's TCGA-BRCA data:
 
 ```
-data  →  pCCA model  →  {CCA-MLE | EM}  →  p(z|·) inference  →  Cox PH  →  C-index
+paper's data → paper's baselines (authors' trained models, rerun)
+             → our pCCA model → {CCA-MLE | EM} → p(z|·) inference → Cox PH → C-index
 ```
 
-## Reproduce every number in the report
+- **Paper baseline:** the paper's PCA, SCCA and GN-SCCA results (HD, PD, OPD
+  deflation), rerun from the authors' own trained models and survival code
+- **Our model:** the same latent-variable PGM, learned two ways — closed-form
+  CCA-MLE and EM (our extension) — with exact posterior and MAP inference
+- **Like-for-like comparison:** our model is run on the paper's exact PCA
+  input (50 genomic + 50 imaging PCs)
+
+## Reproduce every number
 
 ```bash
-pip3 install -r Code/requirements.txt
+pip install -r Code/requirements.txt
+pip install -r Code/requirements-paper.txt      # optional: authors' survival code
 cd Code
-bash run_all.sh ../..
+python run_all.py ../..
 ```
 
-About 6–8 minutes. Writes all JSON, CSV and figures into `Results/`.
-Seed 42; see `Code/README.md` for the full seed and configuration list.
+Works on Windows, macOS and Linux (on macOS / Linux, `python3` / `pip3` if
+`python` is not found). See `Code/README.md` for Windows notes.
+
+Roughly 10–20 minutes. Without the optional libraries the paper baseline falls
+back to our Cox model on the authors' trained models, so it always runs.
 
 ## Contents
 
 ```
 M2_G02/
-├── README.md                         this file
-├── Report/
-│   └── M2_G02_Report.pdf             the M2 report
-├── Video/
-│   └── M2_G02_Video_Link.txt         walkthrough incl. live pipeline demo
+├── README.md
+├── Report/        M2_G02_Report.pdf
+├── Video/         M2_G02_Video_Link.txt
 ├── Code/
-│   ├── README.md                     setup, run commands, seeds, module map
-│   ├── requirements.txt
-│   ├── run_all.sh                    one-command reproduction
+│   ├── README.md               setup, commands, seeds, module map
+│   ├── requirements.txt        numpy, scipy, matplotlib
+│   ├── requirements-paper.txt  lifelines, scikit-survival, pandas, scikit-learn (optional)
+│   ├── run_all.py              one-command reproduction (any OS)
+│   ├── run_all.sh              same, as a bash script
 │   └── src/
-│       ├── data.py                   dataset pipeline, leakage control
-│       ├── pcca.py                   THE GRAPHICAL MODEL + both learning routes + inference
-│       ├── survival.py               Cox PH and Harrell's C-index
-│       ├── run_experiments.py        experiment driver, all KPIs
-│       ├── sweep_latent_dim.py       representation KPI: latent-dimension sweep
-│       └── make_figures.py           report figures
-├── Data/
-│   └── README.md                     provenance, audit, preparation steps
-└── Results/
-    ├── SUMMARY.md                    KPI tables and findings in readable form
-    ├── m2_results_main.json          all per-fold numbers, main configuration
-    ├── m2_latent_dim_sweep.json      latent-dimension sweep
-    ├── m2_kpi_table.csv              flat KPI table
-    └── fig1..fig5 .png               figures
+│       ├── data.py             dataset loading for each input variant
+│       ├── pcca.py             the graphical model, both learning routes, inference
+│       ├── survival.py         Cox PH and Harrell's C-index
+│       ├── paper_baseline.py   paper's methods from the authors' trained models
+│       ├── sweep_latent_dim.py latent-dimension sweep and validation choice of d
+│       ├── run_experiments.py  5 folds × 2 routes × 3 modality settings + baselines
+│       ├── make_figures.py     figures
+│       └── write_summary.py    Results/SUMMARY.md and KPI table
+├── Data/          README.md: provenance, audit, preparation
+└── Results/       SUMMARY.md, JSON, CSV, figures
 ```
 
-## The model, in short
-
-Latent-variable Gaussian PGM (probabilistic CCA):
+## The model
 
 ```
 z   ~ N(0, I_d)
-x|z ~ N(W_x z + mu_x, Psi_x)      x = genomics   (50 PCs)
-y|z ~ N(W_y z + mu_y, Psi_y)      y = histology  (215 PCs)
+x|z ~ N(W_x z + mu_x, Psi_x)      x = genomics
+y|z ~ N(W_y z + mu_y, Psi_y)      y = histology
 
-p(z, x, y) = p(z) p(x|z) p(y|z)           factorisation
-X ⊥ Y | Z                                  the conditional independence
+p(z, x, y) = p(z) p(x|z) p(y|z)
+X ⊥ Y | Z
 ```
 
-The absent edge between X and Y is the model's content. It is imposed in code
-by keeping the overall noise covariance block-diagonal, so within-modality
-correlation lives in `Psi_x` / `Psi_y` and only cross-modality correlation is
-routed through Z.
+The conditional independence is imposed by keeping the noise covariance
+block-diagonal. Parameter learning: CCA-MLE (baseline route) and EM (our
+extension). No structure learning; the latent dimension d is chosen per route
+by validation C-index. Inference is exact Gaussian conditioning; a missing
+modality is marginalised out, not imputed.
 
-- **Parameter learning:** closed-form MLE via classical CCA (the base paper's
-  route, our baseline) and Expectation-Maximization (our extension).
-- **Structure learning:** not performed, by design. The latent dimension `d`
-  is the one structural hyperparameter.
-- **Inference:** exact closed-form Gaussian conditioning for `p(z|x,y)`,
-  `p(z|x)`, `p(z|y)` and MAP. A missing modality is marginalised out exactly —
-  nothing is imputed.
+## Results
 
-## Headline initial results
-
-| | CCA-MLE (baseline) | EM (our extension) | PCA + Cox (non-PGM) |
-|---|---|---|---|
-| Held-out log-lik / sample | 93.75 ± 2.68 | **259.20 ± 14.76** | — |
-| C-index, multimodal (%) | 66.92 ± 5.09 | 67.60 ± 7.81 | **69.78 ± 6.34** |
-| Fit time | ~0.1 s | ~20 s | — |
-
-EM fits the data far better but gains nothing distinguishable downstream, and
-the simple PCA baseline still leads on the multimodal C-index. Full discussion
-and the latent-dimension finding are in `Results/SUMMARY.md`.
+All numbers, tables and findings: `Results/SUMMARY.md`. Key figure:
+`Results/fig6_paper_comparison.png`.
 
 ## Changes since M1
 
-1. The M1 plan was to select `d` on validation by held-out log-likelihood.
-   Implemented and tested — the criterion is monotone in `d` and always picks
-   the smallest value, which is prognostically poor. We fix `d = 10` and report
-   the sweep instead.
-2. Experiments run on the reduced (PCA) feature variant rather than the full
-   1000/1075 features, because with 585 training patients the full
-   within-modality covariance blocks are not identifiable. The full variant is
-   M3 work. See `Data/README.md`.
-3. Non-PGM PCA baselines were added beyond the M1-declared CCA baseline, so
-   the comparison is not only CCA versus EM.
+1. **Paper baseline rerun from the authors' own code and trained models**, so
+   our baseline is the paper's actual method, and checked against the
+   authors' stored results.
+2. **Our model is also run on the paper's exact PCA input**, so the
+   comparison is like-for-like.
+3. **d is chosen on validation C-index.** The M1 plan (validation
+   log-likelihood) was tested and rejected: likelihood keeps falling as d
+   grows and always picks the smallest d.
+4. Full 1000 / 1075 features deferred to M3: with 585 training patients the
+   full within-modality covariance blocks cannot be estimated.
 
-## Reproducibility notes
+## Attribution
 
-- Seed 42 globally; EM initialisation uses `seed + fold`.
-- Train-only standardisation; validation used only for the `d` sweep; test
-  scored once per configuration.
-- Configuration and environment are written into every results JSON.
-- Verified by a clean-copy run: `bash run_all.sh ../..` reproduces every
-  number in `Results/`. On a different machine, C-index values can differ
-  in the second decimal place due to numerical-library differences;
-  log-likelihoods and all conclusions are unchanged.
+`01_methods/`, `02_simulations/` and `03_brca/` at the repository root are the
+authors' code, trained models and processed data, used unchanged and credited
+above. Everything in `M2_G02/Code/` is our implementation.
+
+## Reproducibility
+
+Seed 42; EM initialisation uses seed + fold. Train-only standardisation;
+validation used only to choose d; test scored once. Configuration and
+environment are written into every results JSON. Across machines, C-index can
+differ in the second decimal place; conclusions are unchanged.

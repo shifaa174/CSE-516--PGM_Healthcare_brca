@@ -61,19 +61,29 @@ only sensible prediction metric (accuracy is undefined under 90% censoring),
 5-fold reporting with a standard deviation is mandatory, and differences
 smaller than one standard deviation cannot be claimed.
 
-## Which feature variant we use, and why
+## Feature inputs used
 
-The M2 experiments use the **reduced (PCA) variant**: 50 genomic PCs and 215
-histology PCs. This is a statistical requirement, not a shortcut. With 585
-training patients and 2075 raw features, the full within-modality covariance
-blocks `Psi_x` and `Psi_y` are not identifiable from the sample — the sample
-covariance is singular. The reduced representation, which the base paper
-released for exactly this purpose, keeps `n > p` and makes the model
-well-posed.
+| Input | Genomics | Histology | Source files | Used for |
+|---|---|---|---|---|
+| Paper PCA (`paperpca`) | 50 genomic PCs | 50 imaging PCs | `*_pca/100/k/genes.csv`, `*_log_histogram/1000/k/PCA_image.csv` | like-for-like with the paper's PCA baseline |
+| Reduced (`pca`) | 50 genomic PCs | 215 raw CellProfiler features | `*_pca/100/k/genes.csv`, `image.csv` | our earlier M2 run |
+| Log-histogram (`loghist`) | 1000 genes | 1075 log-histogram features | `*_log_histogram/1000/k/` | input of the paper's SCCA models |
 
-The pipeline supports the full variant via `--variant histogram`, and
-`--noise diag` makes it tractable by restricting the noise blocks to
-variances. Running the full variant is planned for M3.
+The 215 raw CellProfiler features include constant and duplicated columns;
+this is why EM's likelihood advantage over CCA-MLE appears on the reduced
+input but not on the paper's PCA input (see `Results/SUMMARY.md`).
+
+Full 1000 / 1075 features are not used to fit our model at M2: with 585
+training patients, the full within-modality covariance blocks are not
+identifiable. Planned for M3.
+
+## Authors' trained models
+
+`03_brca/results/{sparse,gnscca}_{hd,pd,opd}_1000_{fold}_log_histogram_best.mat`
+hold the authors' trained SCCA and GN-SCCA projection matrices (`u`: 1000 × 50,
+`v`: 1075 × 50). `Code/src/paper_baseline.py` applies them to the log-histogram
+input to rebuild the paper's embeddings. `03_brca/survival_results/*.npz` hold
+the authors' stored C-indices, used as the reproduction check.
 
 ## Preparation steps performed
 

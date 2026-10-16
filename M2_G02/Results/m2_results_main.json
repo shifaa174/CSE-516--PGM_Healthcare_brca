@@ -1,9 +1,9 @@
 {
   "config": {
-    "root": "/Users/paarthjawaharani/CSE-516--PGM_Healthcare_brca",
+    "root": "../../..",
     "variant": "pca",
     "noise": "block",
-    "out": "/Users/paarthjawaharani/CSE-516--PGM_Healthcare_brca/M2_G02/Results",
+    "out": "../../Results",
     "folds": [
       0,
       1,
@@ -12,6 +12,7 @@
       4
     ],
     "d": 10,
+    "d_from": "../../Results/m2_latent_dim_sweep_main.json",
     "select_d": false,
     "d_grid": [
       2,
@@ -46,16 +47,20 @@
       "events_test": 24,
       "event_rate_train": 0.08888888888888889,
       "event_rate_test": 0.09876543209876543,
-      "latent_dim": 10,
+      "latent_dim": {
+        "cca-mle": 20,
+        "em": 10
+      },
       "cca-mle": {
-        "fit_seconds": 0.034,
+        "latent_dim": 20,
+        "fit_seconds": 0.054,
         "n_iter": 1,
         "loglik_monotone": true,
-        "train_loglik_per_sample": 106.5223655788231,
-        "valid_loglik_per_sample": 88.64713507437874,
-        "test_loglik_per_sample": 95.89185044022624,
+        "train_loglik_per_sample": 107.7856418404982,
+        "valid_loglik_per_sample": 87.4976467418019,
+        "test_loglik_per_sample": 95.04401477277771,
         "loglik_trace": [
-          62315.583863611515
+          63054.60047669145
         ],
         "canonical_correlations": [
           0.7816467812960811,
@@ -67,24 +72,35 @@
           0.5724740426810963,
           0.5617983581406687,
           0.5451232019613913,
-          0.5155803691883802
+          0.5155803691883802,
+          0.47525901610686777,
+          0.4563743093463137,
+          0.45212108677295165,
+          0.4486635097775577,
+          0.4361675796335598,
+          0.4251996582822279,
+          0.4146392475857986,
+          0.39394009267560154,
+          0.37461150507207164,
+          0.36357799450112527
         ],
         "multimodal": {
-          "c_index": 0.6334785314250155,
-          "posterior_entropy_nats": 6.857587578221155
+          "c_index": 0.670192906036092,
+          "posterior_entropy_nats": 16.513073874054204
         },
         "genomics_only": {
-          "c_index": 0.7205973864343497,
-          "posterior_entropy_nats": 9.258556887843493
+          "c_index": 0.7367766023646546,
+          "posterior_entropy_nats": 20.680059449941997
         },
         "histology_only": {
-          "c_index": 0.5245799626633478,
-          "posterior_entropy_nats": 9.258556887843497
+          "c_index": 0.5289359054138145,
+          "posterior_entropy_nats": 20.68005944994198
         },
-        "inference_seconds": 0.028
+        "inference_seconds": 0.034
       },
       "em": {
-        "fit_seconds": 3.374,
+        "latent_dim": 10,
+        "fit_seconds": 3.41,
         "n_iter": 300,
         "loglik_monotone": false,
         "train_loglik_per_sample": 339.0083658274766,
@@ -421,16 +437,20 @@
       "events_test": 21,
       "event_rate_train": 0.10427350427350428,
       "event_rate_test": 0.08641975308641975,
-      "latent_dim": 10,
+      "latent_dim": {
+        "cca-mle": 20,
+        "em": 10
+      },
       "cca-mle": {
+        "latent_dim": 20,
         "fit_seconds": 0.012,
         "n_iter": 1,
         "loglik_monotone": true,
-        "train_loglik_per_sample": 106.07210244570352,
-        "valid_loglik_per_sample": 87.00454321978752,
-        "test_loglik_per_sample": 93.02588920254637,
+        "train_loglik_per_sample": 107.26929872351742,
+        "valid_loglik_per_sample": 86.1535725133701,
+        "test_loglik_per_sample": 92.50204100813681,
         "loglik_trace": [
-          62052.17993073656
+          62752.53975325769
         ],
         "canonical_correlations": [
           0.8064154635320474,
@@ -442,24 +462,35 @@
           0.573634994082019,
           0.5269925525099731,
           0.5033193219046975,
-          0.4885661702906416
+          0.4885661702906416,
+          0.46993993496877384,
+          0.4542270168814326,
+          0.44982190762363544,
+          0.42612653907255316,
+          0.4198276401421958,
+          0.4145324782331944,
+          0.39578839589907455,
+          0.37746027513110303,
+          0.36166592522975444,
+          0.35718173244741525
         ],
         "multimodal": {
-          "c_index": 0.71875,
-          "posterior_entropy_nats": 6.934866665311373
+          "c_index": 0.8088235294117647,
+          "posterior_entropy_nats": 16.72786693725923
         },
         "genomics_only": {
-          "c_index": 0.8180147058823529,
-          "posterior_entropy_nats": 9.308686888210294
+          "c_index": 0.8363970588235294,
+          "posterior_entropy_nats": 20.827313861969113
         },
         "histology_only": {
-          "c_index": 0.5091911764705882,
-          "posterior_entropy_nats": 9.308686888210291
+          "c_index": 0.5919117647058824,
+          "posterior_entropy_nats": 20.82731386196911
         },
-        "inference_seconds": 0.027
+        "inference_seconds": 0.031
       },
       "em": {
-        "fit_seconds": 3.399,
+        "latent_dim": 10,
+        "fit_seconds": 3.391,
         "n_iter": 300,
         "loglik_monotone": false,
         "train_loglik_per_sample": 337.576365284298,
@@ -779,7 +810,7 @@
           "c_index": 0.6397058823529411,
           "posterior_entropy_nats": 8.781680126743412
         },
-        "inference_seconds": 0.022
+        "inference_seconds": 0.023
       },
       "baseline_pca_concat": 0.7619485294117647,
       "baseline_pca_genomics": 0.7012867647058824,
@@ -796,16 +827,20 @@
       "events_test": 21,
       "event_rate_train": 0.08717948717948718,
       "event_rate_test": 0.08641975308641975,
-      "latent_dim": 10,
+      "latent_dim": {
+        "cca-mle": 20,
+        "em": 10
+      },
       "cca-mle": {
+        "latent_dim": 20,
         "fit_seconds": 0.012,
         "n_iter": 1,
         "loglik_monotone": true,
-        "train_loglik_per_sample": 107.62412829531077,
-        "valid_loglik_per_sample": 95.7718418234907,
-        "test_loglik_per_sample": 93.95242809211594,
+        "train_loglik_per_sample": 108.89564573382177,
+        "valid_loglik_per_sample": 95.0187038469018,
+        "test_loglik_per_sample": 93.13626427311685,
         "loglik_trace": [
-          62960.1150527568
+          63703.95275428573
         ],
         "canonical_correlations": [
           0.7708752729620408,
@@ -817,24 +852,35 @@
           0.5592452145512621,
           0.5357281237627702,
           0.5109716469337832,
-          0.49180781892021447
+          0.49180781892021447,
+          0.4872992567119779,
+          0.47054094744736846,
+          0.4654544013161571,
+          0.44466038159665894,
+          0.4371868523407936,
+          0.4076339009772956,
+          0.40072867649887006,
+          0.39734499031987747,
+          0.3825016586714371,
+          0.37533649088289456
         ],
         "multimodal": {
-          "c_index": 0.667704280155642,
-          "posterior_entropy_nats": 7.012374319874392
+          "c_index": 0.5315175097276265,
+          "posterior_entropy_nats": 16.632071810043655
         },
         "genomics_only": {
-          "c_index": 0.77431906614786,
-          "posterior_entropy_nats": 9.378071215305296
+          "c_index": 0.5416342412451361,
+          "posterior_entropy_nats": 20.773463380385667
         },
         "histology_only": {
-          "c_index": 0.6381322957198443,
-          "posterior_entropy_nats": 9.378071215305264
+          "c_index": 0.6171206225680934,
+          "posterior_entropy_nats": 20.77346338038564
         },
-        "inference_seconds": 0.027
+        "inference_seconds": 0.032
       },
       "em": {
-        "fit_seconds": 1.466,
+        "latent_dim": 10,
+        "fit_seconds": 1.474,
         "n_iter": 129,
         "loglik_monotone": true,
         "train_loglik_per_sample": 341.0333411278031,
@@ -983,7 +1029,7 @@
           "c_index": 0.6038910505836576,
           "posterior_entropy_nats": 6.980212660380863
         },
-        "inference_seconds": 0.022
+        "inference_seconds": 0.023
       },
       "baseline_pca_concat": 0.6856031128404669,
       "baseline_pca_genomics": 0.5704280155642023,
@@ -1000,16 +1046,20 @@
       "events_test": 28,
       "event_rate_train": 0.09572649572649573,
       "event_rate_test": 0.11522633744855967,
-      "latent_dim": 10,
+      "latent_dim": {
+        "cca-mle": 20,
+        "em": 10
+      },
       "cca-mle": {
+        "latent_dim": 20,
         "fit_seconds": 0.012,
         "n_iter": 1,
         "loglik_monotone": true,
-        "train_loglik_per_sample": 105.84283341813057,
-        "valid_loglik_per_sample": 94.61508621027077,
-        "test_loglik_per_sample": 89.10664303889988,
+        "train_loglik_per_sample": 107.09522353619141,
+        "valid_loglik_per_sample": 93.92533457525599,
+        "test_loglik_per_sample": 88.40732300511704,
         "loglik_trace": [
-          61918.05754960638
+          62650.70576867198
         ],
         "canonical_correlations": [
           0.760615741359454,
@@ -1021,24 +1071,35 @@
           0.5409336305908241,
           0.5202174292095738,
           0.5108756149809534,
-          0.473075063919466
+          0.473075063919466,
+          0.4615959178812255,
+          0.4565448000081891,
+          0.44939056254101833,
+          0.42990235823935863,
+          0.4207900192654032,
+          0.41385657549475346,
+          0.4079757971173517,
+          0.4040289173338475,
+          0.39778786728155024,
+          0.3842085570186866
         ],
         "multimodal": {
-          "c_index": 0.7279894875164258,
-          "posterior_entropy_nats": 7.090421411427602
+          "c_index": 0.7339027595269383,
+          "posterior_entropy_nats": 16.767270074401118
         },
         "genomics_only": {
-          "c_index": 0.6399474375821288,
-          "posterior_entropy_nats": 9.441765642052097
+          "c_index": 0.6583442838370565,
+          "posterior_entropy_nats": 20.880313262297342
         },
         "histology_only": {
-          "c_index": 0.6859395532194481,
-          "posterior_entropy_nats": 9.441765642052061
+          "c_index": 0.6452036793692509,
+          "posterior_entropy_nats": 20.880313262297335
         },
-        "inference_seconds": 0.026
+        "inference_seconds": 0.031
       },
       "em": {
-        "fit_seconds": 0.927,
+        "latent_dim": 10,
+        "fit_seconds": 0.947,
         "n_iter": 81,
         "loglik_monotone": true,
         "train_loglik_per_sample": 337.28253416624915,
@@ -1139,7 +1200,7 @@
           "c_index": 0.5906701708278581,
           "posterior_entropy_nats": 5.740906492696091
         },
-        "inference_seconds": 0.024
+        "inference_seconds": 0.023
       },
       "baseline_pca_concat": 0.7752956636005256,
       "baseline_pca_genomics": 0.6944809461235217,
@@ -1156,16 +1217,20 @@
       "events_test": 21,
       "event_rate_train": 0.10085470085470086,
       "event_rate_test": 0.08641975308641975,
-      "latent_dim": 10,
+      "latent_dim": {
+        "cca-mle": 20,
+        "em": 10
+      },
       "cca-mle": {
+        "latent_dim": 20,
         "fit_seconds": 0.012,
         "n_iter": 1,
         "loglik_monotone": true,
-        "train_loglik_per_sample": 105.30911101985521,
-        "valid_loglik_per_sample": 93.64563110547573,
-        "test_loglik_per_sample": 96.78510339395682,
+        "train_loglik_per_sample": 106.56365494450667,
+        "valid_loglik_per_sample": 93.02337753664462,
+        "test_loglik_per_sample": 95.9859105719924,
         "loglik_trace": [
-          61605.8299466153
+          62339.7381425364
         ],
         "canonical_correlations": [
           0.7700277200058404,
@@ -1177,24 +1242,35 @@
           0.5807644362542567,
           0.5294268196198482,
           0.5139667607815909,
-          0.4899229147862757
+          0.4899229147862757,
+          0.48298962960265573,
+          0.46607145038626274,
+          0.4617021713496679,
+          0.4495420774698273,
+          0.4331510430837088,
+          0.41117878404722125,
+          0.3983517719999908,
+          0.38911975303606733,
+          0.38255003914610797,
+          0.36672231172563546
         ],
         "multimodal": {
-          "c_index": 0.5966076696165191,
-          "posterior_entropy_nats": 7.076446889642996
+          "c_index": 0.5530973451327433,
+          "posterior_entropy_nats": 16.729394654228813
         },
         "genomics_only": {
-          "c_index": 0.6556047197640118,
-          "posterior_entropy_nats": 9.432310063932444
+          "c_index": 0.5899705014749262,
+          "posterior_entropy_nats": 20.85131093667551
         },
         "histology_only": {
-          "c_index": 0.5405604719764012,
-          "posterior_entropy_nats": 9.432310063932427
+          "c_index": 0.5781710914454278,
+          "posterior_entropy_nats": 20.85131093667554
         },
-        "inference_seconds": 0.026
+        "inference_seconds": 0.031
       },
       "em": {
-        "fit_seconds": 3.436,
+        "latent_dim": 10,
+        "fit_seconds": 3.426,
         "n_iter": 300,
         "loglik_monotone": false,
         "train_loglik_per_sample": 335.3872347837929,
@@ -1514,7 +1590,7 @@
           "c_index": 0.6799410029498525,
           "posterior_entropy_nats": 8.642074789193153
         },
-        "inference_seconds": 0.022
+        "inference_seconds": 0.023
       },
       "baseline_pca_concat": 0.6076696165191741,
       "baseline_pca_genomics": 0.633480825958702,
@@ -1523,65 +1599,65 @@
   ],
   "summary": {
     "c_index/cca-mle/multimodal": {
-      "mean": 66.891,
-      "std": 4.992,
+      "mean": 65.951,
+      "std": 10.55,
       "per_fold": [
-        63.348,
-        71.875,
-        66.77,
-        72.799,
-        59.661
+        67.019,
+        80.882,
+        53.152,
+        73.39,
+        55.31
       ]
     },
     "c_index/cca-mle/genomics_only": {
-      "mean": 72.17,
-      "std": 6.797,
+      "mean": 67.262,
+      "std": 10.501,
       "per_fold": [
-        72.06,
-        81.801,
-        77.432,
-        63.995,
-        65.56
+        73.678,
+        83.64,
+        54.163,
+        65.834,
+        58.997
       ]
     },
     "c_index/cca-mle/histology_only": {
-      "mean": 57.968,
-      "std": 6.963,
+      "mean": 59.227,
+      "std": 3.906,
       "per_fold": [
-        52.458,
-        50.919,
-        63.813,
-        68.594,
-        54.056
+        52.894,
+        59.191,
+        61.712,
+        64.52,
+        57.817
       ]
     },
     "loglik_per_sample/cca-mle/test": {
-      "mean": 93.752,
-      "std": 2.681,
+      "mean": 93.015,
+      "std": 2.625,
       "per_fold": [
-        95.892,
-        93.026,
-        93.952,
-        89.107,
-        96.785
+        95.044,
+        92.502,
+        93.136,
+        88.407,
+        95.986
       ]
     },
     "loglik_per_sample/cca-mle/train": {
-      "mean": 106.274,
-      "std": 0.78,
+      "mean": 107.522,
+      "std": 0.79,
       "per_fold": [
-        106.522,
-        106.072,
-        107.624,
-        105.843,
-        105.309
+        107.786,
+        107.269,
+        108.896,
+        107.095,
+        106.564
       ]
     },
     "fit_seconds/cca-mle": {
-      "mean": 0.016,
-      "std": 0.009,
+      "mean": 0.02,
+      "std": 0.017,
       "per_fold": [
-        0.034,
+        0.054,
         0.012,
         0.012,
         0.012,
@@ -1600,36 +1676,36 @@
       ]
     },
     "posterior_entropy/cca-mle/multimodal": {
-      "mean": 6.994,
-      "std": 0.088,
+      "mean": 16.674,
+      "std": 0.092,
       "per_fold": [
-        6.858,
-        6.935,
-        7.012,
-        7.09,
-        7.076
+        16.513,
+        16.728,
+        16.632,
+        16.767,
+        16.729
       ]
     },
     "posterior_entropy/cca-mle/genomics_only": {
-      "mean": 9.364,
+      "mean": 20.802,
       "std": 0.071,
       "per_fold": [
-        9.259,
-        9.309,
-        9.378,
-        9.442,
-        9.432
+        20.68,
+        20.827,
+        20.773,
+        20.88,
+        20.851
       ]
     },
     "posterior_entropy/cca-mle/histology_only": {
-      "mean": 9.364,
+      "mean": 20.802,
       "std": 0.071,
       "per_fold": [
-        9.259,
-        9.309,
-        9.378,
-        9.442,
-        9.432
+        20.68,
+        20.827,
+        20.773,
+        20.88,
+        20.851
       ]
     },
     "c_index/em/multimodal": {
@@ -1688,14 +1764,14 @@
       ]
     },
     "fit_seconds/em": {
-      "mean": 2.52,
-      "std": 1.094,
+      "mean": 2.53,
+      "std": 1.09,
       "per_fold": [
-        3.374,
-        3.399,
-        1.466,
-        0.927,
-        3.436
+        3.41,
+        3.391,
+        1.474,
+        0.947,
+        3.426
       ]
     },
     "n_iter/em": {

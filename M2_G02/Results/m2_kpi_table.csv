@@ -1,24 +1,68 @@
-KPI,configuration,mean,std,per_fold
-C-index (%),cca-mle/multimodal,66.918,5.088,62.85 / 71.97 / 67.31 / 72.80 / 59.66
-C-index (%),cca-mle/genomics_only,72.108,6.745,71.87 / 81.53 / 77.59 / 63.99 / 65.56
-C-index (%),cca-mle/histology_only,57.885,6.921,52.33 / 51.01 / 63.50 / 68.59 / 53.98
-C-index (%),em/multimodal,67.603,7.814,62.35 / 81.34 / 58.21 / 67.67 / 68.44
-C-index (%),em/genomics_only,72.051,6.219,70.44 / 84.01 / 67.86 / 71.35 / 66.59
-C-index (%),em/histology_only,60.265,5.981,50.03 / 63.97 / 60.47 / 58.94 / 67.92
-C-index (%),baseline_pca_concat,69.781,6.338,65.84 / 76.29 / 68.48 / 77.53 / 60.77
-C-index (%),baseline_pca_genomics,67.805,7.33,79.28 / 69.67 / 57.20 / 69.38 / 63.50
-C-index (%),baseline_pca_histology,62.721,8.509,51.96 / 63.42 / 65.29 / 76.74 / 56.20
-train log-lik / sample,cca-mle,106.274,0.78,106.52 / 106.07 / 107.62 / 105.84 / 105.31
-test log-lik / sample,cca-mle,93.752,2.681,95.89 / 93.03 / 93.95 / 89.11 / 96.78
-fit seconds,cca-mle,0.11,0.134,0.04 / 0.05 / 0.38 / 0.04 / 0.04
-EM/CCA iterations,cca-mle,1.0,0.0,1.00 / 1.00 / 1.00 / 1.00 / 1.00
-posterior entropy (nats),cca-mle/multimodal,6.994,0.088,6.86 / 6.93 / 7.01 / 7.09 / 7.08
-posterior entropy (nats),cca-mle/genomics_only,9.364,0.071,9.26 / 9.31 / 9.38 / 9.44 / 9.43
-posterior entropy (nats),cca-mle/histology_only,9.364,0.071,9.26 / 9.31 / 9.38 / 9.44 / 9.43
-train log-lik / sample,em,338.058,1.883,339.01 / 337.58 / 341.03 / 337.28 / 335.39
-test log-lik / sample,em,259.196,14.764,270.76 / 259.25 / 251.95 / 235.87 / 278.15
-fit seconds,em,19.784,7.888,26.70 / 25.95 / 12.19 / 8.31 / 25.77
-EM/CCA iterations,em,222.0,96.728,300.00 / 300.00 / 129.00 / 81.00 / 300.00
-posterior entropy (nats),em/multimodal,0.417,1.237,-0.90 / -0.59 / 1.72 / 2.09 / -0.23
-posterior entropy (nats),em/genomics_only,2.213,2.476,-0.03 / 0.12 / 4.25 / 6.05 / 0.68
-posterior entropy (nats),em/histology_only,7.727,1.186,8.49 / 8.78 / 6.98 / 5.74 / 8.64
+input,kpi,mean,std,per_fold
+reduced,c_index/cca-mle/multimodal,65.951,10.55,67.02 / 80.88 / 53.15 / 73.39 / 55.31
+reduced,c_index/cca-mle/genomics_only,67.262,10.501,73.68 / 83.64 / 54.16 / 65.83 / 59.00
+reduced,c_index/cca-mle/histology_only,59.227,3.906,52.89 / 59.19 / 61.71 / 64.52 / 57.82
+reduced,loglik_per_sample/cca-mle/test,93.015,2.625,95.04 / 92.50 / 93.14 / 88.41 / 95.99
+reduced,loglik_per_sample/cca-mle/train,107.522,0.79,107.79 / 107.27 / 108.90 / 107.09 / 106.56
+reduced,fit_seconds/cca-mle,0.02,0.017,0.05 / 0.01 / 0.01 / 0.01 / 0.01
+reduced,n_iter/cca-mle,1.0,0.0,1.00 / 1.00 / 1.00 / 1.00 / 1.00
+reduced,posterior_entropy/cca-mle/multimodal,16.674,0.092,16.51 / 16.73 / 16.63 / 16.77 / 16.73
+reduced,posterior_entropy/cca-mle/genomics_only,20.802,0.071,20.68 / 20.83 / 20.77 / 20.88 / 20.85
+reduced,posterior_entropy/cca-mle/histology_only,20.802,0.071,20.68 / 20.83 / 20.77 / 20.88 / 20.85
+reduced,c_index/em/multimodal,67.585,7.761,62.35 / 81.25 / 58.29 / 67.67 / 68.36
+reduced,c_index/em/genomics_only,72.108,6.167,70.75 / 83.92 / 67.86 / 71.42 / 66.59
+reduced,c_index/em/histology_only,60.303,5.973,50.09 / 63.97 / 60.39 / 59.07 / 67.99
+reduced,loglik_per_sample/em/test,259.196,14.764,270.76 / 259.25 / 251.95 / 235.87 / 278.15
+reduced,loglik_per_sample/em/train,338.058,1.883,339.01 / 337.58 / 341.03 / 337.28 / 335.39
+reduced,fit_seconds/em,2.53,1.09,3.41 / 3.39 / 1.47 / 0.95 / 3.43
+reduced,n_iter/em,222.0,96.728,300.00 / 300.00 / 129.00 / 81.00 / 300.00
+reduced,posterior_entropy/em/multimodal,0.417,1.237,-0.90 / -0.59 / 1.72 / 2.09 / -0.23
+reduced,posterior_entropy/em/genomics_only,2.213,2.476,-0.03 / 0.12 / 4.25 / 6.05 / 0.68
+reduced,posterior_entropy/em/histology_only,7.727,1.186,8.49 / 8.78 / 6.98 / 5.74 / 8.64
+reduced,c_index/baseline_pca_concat,69.778,6.316,65.84 / 76.19 / 68.56 / 77.53 / 60.77
+reduced,c_index/baseline_pca_genomics,67.824,7.383,79.15 / 70.13 / 57.04 / 69.45 / 63.35
+reduced,c_index/baseline_pca_histology,62.781,8.45,52.09 / 63.60 / 65.14 / 76.74 / 56.34
+paperpca,c_index/cca-mle/multimodal,65.433,6.581,61.05 / 69.39 / 61.40 / 76.48 / 58.85
+paperpca,c_index/cca-mle/genomics_only,67.308,8.613,69.51 / 79.87 / 59.14 / 71.75 / 56.27
+paperpca,c_index/cca-mle/histology_only,57.339,6.455,58.80 / 53.77 / 64.36 / 63.01 / 46.76
+paperpca,loglik_per_sample/cca-mle/test,-157.099,4.634,-154.52 / -166.16 / -154.73 / -153.53 / -156.57
+paperpca,loglik_per_sample/cca-mle/train,-132.156,0.375,-131.95 / -131.63 / -132.65 / -132.03 / -132.52
+paperpca,fit_seconds/cca-mle,0.006,0.008,0.02 / 0.00 / 0.00 / 0.00 / 0.00
+paperpca,n_iter/cca-mle,1.0,0.0,1.00 / 1.00 / 1.00 / 1.00 / 1.00
+paperpca,posterior_entropy/cca-mle/multimodal,28.39,0.128,28.48 / 28.43 / 28.25 / 28.23 / 28.56
+paperpca,posterior_entropy/cca-mle/genomics_only,33.642,0.093,33.70 / 33.66 / 33.55 / 33.53 / 33.77
+paperpca,posterior_entropy/cca-mle/histology_only,33.642,0.093,33.70 / 33.66 / 33.55 / 33.53 / 33.77
+paperpca,c_index/em/multimodal,63.442,8.088,67.70 / 67.46 / 52.53 / 73.98 / 55.53
+paperpca,c_index/em/genomics_only,69.95,8.676,77.29 / 77.76 / 60.86 / 75.89 / 57.97
+paperpca,c_index/em/histology_only,56.928,8.38,64.16 / 52.66 / 57.35 / 66.95 / 43.51
+paperpca,loglik_per_sample/em/test,-158.683,5.19,-155.92 / -168.87 / -156.11 / -154.70 / -157.81
+paperpca,loglik_per_sample/em/train,-131.559,0.37,-131.39 / -131.06 / -132.04 / -131.36 / -131.93
+paperpca,fit_seconds/em,0.14,0.016,0.15 / 0.11 / 0.16 / 0.14 / 0.13
+paperpca,n_iter/em,91.6,10.48,101.00 / 75.00 / 104.00 / 92.00 / 86.00
+paperpca,posterior_entropy/em/multimodal,51.118,0.218,51.29 / 51.16 / 50.95 / 50.80 / 51.39
+paperpca,posterior_entropy/em/genomics_only,59.627,0.15,59.79 / 59.64 / 59.50 / 59.41 / 59.79
+paperpca,posterior_entropy/em/histology_only,58.439,0.141,58.51 / 58.47 / 58.34 / 58.24 / 58.65
+paperpca,c_index/baseline_pca_concat,66.082,6.966,75.98 / 65.81 / 59.69 / 71.48 / 57.45
+paperpca,c_index/baseline_pca_genomics,67.824,7.383,79.15 / 70.13 / 57.04 / 69.45 / 63.35
+paperpca,c_index/baseline_pca_histology,57.636,8.49,58.06 / 57.26 / 56.97 / 71.35 / 44.54
+paper_baseline,PCA/genomics,67.59,7.66,79.30 / 69.29 / 56.20 / 69.84 / 63.33
+paper_baseline,PCA/imaging,58.13,7.97,59.23 / 58.23 / 57.21 / 70.56 / 45.43
+paper_baseline,PCA/concat,66.47,6.86,75.82 / 66.27 / 60.39 / 72.20 / 57.66
+paper_baseline,SCCA/HD/genomics,68.67,9.34,73.77 / 82.27 / 70.54 / 60.66 / 56.11
+paper_baseline,SCCA/HD/imaging,53.15,10.89,49.41 / 44.61 / 58.37 / 71.74 / 41.61
+paper_baseline,SCCA/HD/concat,67.79,8.26,67.93 / 77.51 / 72.87 / 67.67 / 52.95
+paper_baseline,SCCA/PD/genomics,67.79,3.89,67.81 / 73.58 / 66.12 / 69.64 / 61.78
+paper_baseline,SCCA/PD/imaging,56.99,9.89,57.49 / 45.61 / 61.63 / 72.72 / 47.50
+paper_baseline,SCCA/PD/concat,67.58,4.69,69.61 / 65.36 / 70.93 / 72.52 / 59.50
+paper_baseline,SCCA/OPD/genomics,70.03,7.5,75.64 / 81.72 / 66.51 / 64.79 / 61.49
+paper_baseline,SCCA/OPD/imaging,55.86,10.07,53.01 / 45.16 / 61.55 / 72.46 / 47.13
+paper_baseline,SCCA/OPD/concat,68.98,6.16,72.90 / 75.87 / 69.69 / 68.72 / 57.73
+paper_baseline,GN-SCCA/HD/genomics,,,failed
+paper_baseline,GN-SCCA/HD/imaging,,,failed
+paper_baseline,GN-SCCA/HD/concat,,,failed
+paper_baseline,GN-SCCA/PD/genomics,62.6,10.79,68.05 / 71.12 / 66.20 / 66.30 / 41.31
+paper_baseline,GN-SCCA/PD/imaging,58.1,10.46,58.30 / 47.26 / 64.03 / 74.30 / 46.61
+paper_baseline,GN-SCCA/PD/concat,65.47,10.14,69.86 / 66.54 / 70.23 / 74.82 / 45.88
+paper_baseline,GN-SCCA/OPD/genomics,63.94,11.05,70.54 / 74.77 / 67.75 / 63.54 / 43.08
+paper_baseline,GN-SCCA/OPD/imaging,58.86,9.71,60.16 / 46.07 / 62.09 / 74.43 / 51.55
+paper_baseline,GN-SCCA/OPD/concat,66.85,9.47,72.34 / 70.48 / 69.84 / 73.51 / 48.09

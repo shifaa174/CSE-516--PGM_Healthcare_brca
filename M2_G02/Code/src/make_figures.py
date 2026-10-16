@@ -1,9 +1,3 @@
-"""
-make_figures.py -- Result figures for the M2 report.
-Run AFTER run_experiments.py and sweep_latent_dim.py.
-
-    python make_figures.py ../../Results
-"""
 import json, os, sys
 import numpy as np
 import matplotlib
@@ -85,38 +79,53 @@ def fig2_em_convergence(res, out):
     ax.set_xlabel("EM iteration")
     ax.set_ylabel(r"training log-likelihood ($\times 10^{3}$ nats)")
     ax.grid(axis="y", color=MUTED, lw=0.5, alpha=0.5); ax.set_axisbelow(True)
-    mono = all(r["em"]["loglik_monotone"] for r in res["per_fold"])
     iters = [r["em"]["n_iter"] for r in res["per_fold"]]
-    ax.set_title("EM increases the joint log-likelihood monotonically\n"
+    cap = res["config"]["em_iters"]
+    conv = sum(1 for i in iters if i < cap)
+    ax.set_title("EM log-likelihood rises steeply, then plateaus\n"
                  f"bold = mean of {len(traces)} folds; grey = per fold; "
-                 f"monotone on every fold: {mono}; "
-                 f"{min(iters)}–{max(iters)} iterations",
+                 f"converged on {conv} of {len(iters)} folds before the {cap}-iteration cap",
                  fontsize=9, loc="left", color=INK)
     fig.savefig(os.path.join(out, "fig2_em_convergence.png"))
     plt.close(fig)
 
 
-def fig3_cindex(res, out):
+def _dims(res):
+    ld = res["per_fold"][0].get("latent_dim", res["config"]["d"])
+    if isinstance(ld, dict):
+        return ld["cca-mle"], ld["em"]
+    return ld, ld
+
+
+def _variant_label(v):
+    return {"pca": "50 genomic PCs + 215 raw CellProfiler features",
+            "paperpca": "paper's 50 + 50 PCA input",
+            "histogram": "1000 genes + 1075 histology features",
+            "loghist": "1000 genes + 1075 log-histogram features"}.get(v, v)
+
+
+def fig3_cindex(res, out, name="fig3_cindex_comparison.png"):
     s = res["summary"]
     settings = ["multimodal", "genomics_only", "histology_only"]
     labels = ["Multimodal\n$p(z|x,y)$", "Genomics only\n$p(z|x)$",
               "Histology only\n$p(z|y)$"]
     base = ["baseline_pca_concat", "baseline_pca_genomics",
             "baseline_pca_histology"]
-    series = [("CCA-MLE (baseline route)", S1,
+    dc, de = _dims(res)
+    series = [(f"CCA-MLE, d = {dc}", S1,
                [s[f"c_index/cca-mle/{k}"] for k in settings]),
-              ("EM (our extension)", S2,
+              (f"EM (our extension), d = {de}", S2,
                [s[f"c_index/em/{k}"] for k in settings]),
               ("PCA + Cox (non-PGM baseline)", S3,
                [s[f"c_index/{k}"] for k in base])]
 
     fig, ax = plt.subplots(figsize=(6.3, 3.5))
     x = np.arange(len(settings)); w = 0.26
-    for i, (name, col, vals) in enumerate(series):
+    for i, (slabel, col, vals) in enumerate(series):
         mu = [v["mean"] for v in vals]
         sd = [v["std"] for v in vals]
         pos = x + (i - 1) * (w + 0.015)
-        ax.bar(pos, mu, w, label=name, color=col, edgecolor=SURF, lw=1.2,
+        ax.bar(pos, mu, w, label=slabel, color=col, edgecolor=SURF, lw=1.2,
                zorder=3)
         ax.errorbar(pos, mu, yerr=sd, fmt="none", ecolor=INK2, elinewidth=1.0,
                     capsize=3, zorder=4)
@@ -132,39 +141,43 @@ def fig3_cindex(res, out):
               bbox_to_anchor=(0.5, 1.16))
     cfg = res["config"]
     ax.set_title("Survival prediction from the latent posterior\n"
-                 f"mean ± sd over {len(cfg['folds'])} folds, "
-                 f"variant = {cfg['variant']}, d = {cfg['d']}, "
-                 f"seed = {cfg['seed']}",
+                 f"mean ± sd over {len(cfg['folds'])} folds; input: {_variant_label(cfg['variant'])}; "
+                 f"seed {cfg['seed']}",
                  fontsize=9, loc="left", color=INK, pad=30)
-    fig.savefig(os.path.join(out, "fig3_cindex_comparison.png"))
+    fig.savefig(os.path.join(out, name))
     plt.close(fig)
 
 
-def fig4_latent_dim(sweep, out):
-    """Two panels, never a dual axis: the two measures have different units."""
+def fig4_latent_dim(sweep, out, name="fig4_latent_dim_sweep.png"):
     grid = sorted({r["d"] for r in sweep["rows"]})
-    fig, (a1, a2) = plt.subplots(1, 2, figsize=(7.2, 3.0))
-    for meth, col, lab in [("cca-mle", S1, "CCA-MLE"), ("em", S2, "EM")]:
-        ll = [sweep["summary"][f"{meth}/d={d}"]["valid_loglik_mean"]
-              for d in grid]
-        ci = [sweep["summary"][f"{meth}/d={d}"]["c_index_mean"] for d in grid]
-        sd = [sweep["summary"][f"{meth}/d={d}"]["c_index_std"] for d in grid]
-        a1.plot(grid, ll, "o-", color=col, lw=2, ms=5, label=lab, zorder=3)
-        a2.errorbar(grid, ci, yerr=sd, fmt="o-", color=col, lw=2, ms=5,
-                    ecolor=INK2, elinewidth=0.9, capsize=3, label=lab, zorder=3)
-    for ax, yl in ((a1, "validation log-likelihood / sample"),
-                   (a2, "test C-index (%)")):
+    chosen = sweep.get("chosen_d", {})
+    fig, axes = plt.subplots(1, 3, figsize=(10.2, 3.0))
+    panels = [("valid_loglik_mean", None, "validation log-likelihood / sample", "Likelihood: falls as d grows"),
+              ("valid_c_index_mean", None, "validation C-index (%)", "Validation C-index: picks d"),
+              ("c_index_mean", "c_index_std", "test C-index (%)", "Test C-index: reported only")]
+    for ax, (key, sdk, yl, title) in zip(axes, panels):
+        for meth, col, lab in [("cca-mle", S1, "CCA-MLE"), ("em", S2, "EM")]:
+            ys = [sweep["summary"][f"{meth}/d={d}"].get(key, np.nan) for d in grid]
+            if sdk:
+                sd = [sweep["summary"][f"{meth}/d={d}"][sdk] for d in grid]
+                ax.errorbar(grid, ys, yerr=sd, fmt="o-", color=col, lw=2, ms=5,
+                            ecolor=INK2, elinewidth=0.9, capsize=3, label=lab, zorder=3)
+            else:
+                ax.plot(grid, ys, "o-", color=col, lw=2, ms=5, label=lab, zorder=3)
+            if key == "valid_c_index_mean" and meth in chosen:
+                d0 = chosen[meth]
+                y0 = sweep["summary"][f"{meth}/d={d0}"][key]
+                ax.scatter([d0], [y0], s=140, facecolor="none", edgecolor=col, lw=2, zorder=4)
         ax.set_xlabel("latent dimension $d$"); ax.set_ylabel(yl)
         ax.grid(color=MUTED, lw=0.5, alpha=0.5); ax.set_axisbelow(True)
-        ax.legend(frameon=False, fontsize=8)
-    a1.set_title("Unsupervised criterion: monotone in $d$", fontsize=9,
-                 loc="left", color=INK)
-    a2.set_title("Supervised outcome: peaks near $d=10$", fontsize=9,
-                 loc="left", color=INK)
-    fig.suptitle("Held-out likelihood does not identify a useful latent "
-                 "dimension", fontsize=10, x=0.02, ha="left", y=1.06,
-                 color=INK)
-    fig.savefig(os.path.join(out, "fig4_latent_dim_sweep.png"))
+        ax.set_title(title, fontsize=9, loc="left", color=INK)
+    axes[0].legend(frameon=False, fontsize=8)
+    v = sweep["config"].get("variant", "pca")
+    ch = ", ".join(f"{k} d = {v2}" for k, v2 in chosen.items())
+    fig.suptitle(f"Latent dimension sweep, input: {_variant_label(v)}. Circled = chosen on validation ({ch})",
+                 fontsize=10, x=0.01, ha="left", y=1.06, color=INK)
+    fig.tight_layout()
+    fig.savefig(os.path.join(out, name))
     plt.close(fig)
 
 
@@ -174,8 +187,8 @@ def fig5_entropy(res, out):
     labels = ["Multimodal", "Genomics only", "Histology only"]
     fig, ax = plt.subplots(figsize=(5.4, 3.0))
     x = np.arange(len(settings)); w = 0.36
-    for i, (meth, col, lab) in enumerate([("cca-mle", S1, "CCA-MLE"),
-                                          ("em", S2, "EM")]):
+    for i, (meth, col, lab) in enumerate([("cca-mle", S1, f"CCA-MLE, d = {_dims(res)[0]}"),
+                                          ("em", S2, f"EM, d = {_dims(res)[1]}")]):
         v = [s[f"posterior_entropy/{meth}/{k}"]["mean"] for k in settings]
         pos = x + (i - 0.5) * (w + 0.02)
         ax.bar(pos, v, w, color=col, edgecolor=SURF, lw=1.2, label=lab,
@@ -183,12 +196,13 @@ def fig5_entropy(res, out):
         for p_, m_ in zip(pos, v):
             ax.text(p_, m_ + 0.15, f"{m_:.2f}", ha="center", va="bottom",
                     fontsize=7.5, color=INK2, zorder=4)
-    d = res["config"]["d"]
-    prior = 0.5 * d * np.log(2 * np.pi * np.e)
-    ax.axhline(prior, color=INK2, lw=1.0, ls=(0, (4, 3)), zorder=2)
-    ax.text(len(settings) - 0.55, prior + 0.2,
-            f"prior entropy ({prior:.1f})", fontsize=7.5, color=INK2,
-            ha="right")
+    dc, de = _dims(res)
+    if dc == de:
+        prior = 0.5 * dc * np.log(2 * np.pi * np.e)
+        ax.axhline(prior, color=INK2, lw=1.0, ls=(0, (4, 3)), zorder=2)
+        ax.text(len(settings) - 0.55, prior + 0.2,
+                f"prior entropy ({prior:.1f})", fontsize=7.5, color=INK2,
+                ha="right")
     ax.set_xticks(x); ax.set_xticklabels(labels)
     ax.set_ylabel("posterior differential entropy (nats)")
     ax.grid(axis="y", color=MUTED, lw=0.5, alpha=0.5); ax.set_axisbelow(True)
@@ -200,14 +214,52 @@ def fig5_entropy(res, out):
     plt.close(fig)
 
 
+def fig6_paper_comparison(pb, pp, out):
+    pick = {r["method"]: r for r in pb["rows"] if r["setting"] == "concat"}
+    items = []
+    for lab in ("PCA", "SCCA/OPD", "GN-SCCA/OPD"):
+        r = pick.get(lab)
+        if r and r["rerun"]:
+            items.append((f"Paper: {lab}", S3, r["rerun"]["mean"], r["rerun"]["std"]))
+    if pp:
+        s = pp["summary"]
+        dc, de = _dims(pp)
+        items.append((f"Ours: CCA-MLE (d = {dc})", S1, s["c_index/cca-mle/multimodal"]["mean"], s["c_index/cca-mle/multimodal"]["std"]))
+        items.append((f"Ours: EM (d = {de})", S2, s["c_index/em/multimodal"]["mean"], s["c_index/em/multimodal"]["std"]))
+    fig, ax = plt.subplots(figsize=(6.4, 3.3))
+    y = np.arange(len(items))[::-1]
+    for yi, (lab, col, m, sd) in zip(y, items):
+        ax.barh(yi, m, 0.6, color=col, edgecolor=SURF, lw=1.2, zorder=3)
+        ax.errorbar(m, yi, xerr=sd, fmt="none", ecolor=INK2, elinewidth=1.0, capsize=3, zorder=4)
+        ax.text(m + sd + 0.6, yi, f"{m:.1f}", va="center", fontsize=8, color=INK2)
+    ax.set_yticks(y); ax.set_yticklabels([i[0] for i in items])
+    ax.set_xlim(40, 85); ax.set_xlabel("test C-index (%), multimodal / concatenated")
+    ax.grid(axis="x", color=MUTED, lw=0.5, alpha=0.5); ax.set_axisbelow(True)
+    eng = "authors' code" if pb["engine"] == "paper" else "authors' trained models, our Cox"
+    ax.set_title("Paper baselines (rerun) vs our latent-variable PGM, mean ± sd over 5 folds\n"
+                 f"paper rows: {eng}; our rows: paper's 50 + 50 PCA input, d chosen on validation",
+                 fontsize=9, loc="left", color=INK)
+    fig.savefig(os.path.join(out, "fig6_paper_comparison.png"))
+    plt.close(fig)
+
+
 if __name__ == "__main__":
     out = os.path.abspath(sys.argv[1] if len(sys.argv) > 1 else "../../Results")
-    res = json.load(open(os.path.join(out, "m2_results_main.json")))
+    j = lambda n: json.load(open(os.path.join(out, n), encoding="utf-8")) if os.path.exists(os.path.join(out, n)) else None
+    res = j("m2_results_main.json")
     fig1_graphical_model(out)
-    fig2_em_convergence(res, out)
-    fig3_cindex(res, out)
-    fig5_entropy(res, out)
-    sp = os.path.join(out, "m2_latent_dim_sweep.json")
-    if os.path.exists(sp):
-        fig4_latent_dim(json.load(open(sp)), out)
+    if res:
+        fig2_em_convergence(res, out)
+        fig3_cindex(res, out)
+        fig5_entropy(res, out)
+    pp = j("m2_results_paperpca.json")
+    if pp:
+        fig3_cindex(pp, out, "fig3b_cindex_paper_input.png")
+    for tag, name in (("main", "fig4_latent_dim_sweep.png"), ("paperpca", "fig4b_latent_dim_sweep_paper_input.png")):
+        sw = j(f"m2_latent_dim_sweep_{tag}.json") or (j("m2_latent_dim_sweep.json") if tag == "main" else None)
+        if sw:
+            fig4_latent_dim(sw, out, name)
+    pb = j("m2_paper_baseline.json")
+    if pb:
+        fig6_paper_comparison(pb, pp, out)
     print("figures written to", out)

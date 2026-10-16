@@ -1,0 +1,4 @@
+lifelines>=0.27
+scikit-survival>=0.21
+pandas>=1.5
+scikit-learn>=1.2
