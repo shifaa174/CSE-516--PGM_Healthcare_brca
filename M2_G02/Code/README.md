@@ -6,7 +6,9 @@ code and trained models.
 
 ## Environment
 
-Python 3.10+ (tested on macOS / Python 3.12 and Linux / Python 3.13).
+Python 3.10 to 3.13 (tested on macOS / Python 3.12, Windows and Linux / Python 3.13).
+Avoid Python 3.14 or newer for now: scikit-survival and pandas have no prebuilt
+wheels for it on Windows, so `requirements-paper.txt` fails to install.
 
 **Required** — the whole pipeline runs with only these:
 
