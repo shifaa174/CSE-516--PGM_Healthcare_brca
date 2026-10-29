@@ -25,12 +25,13 @@ Survival prediction is evaluated with the C-index.
 | Milestone | Folder | Status |
 |---|---|---|
 | M1: Proposal and Scoping | [`M1_G02/`](M1_G02/) | Submitted |
-| M2 | — | Upcoming |
+| M2: Technical Foundation | [`M2_G02/`](M2_G02/) | Submitted |
 | M3 | — | Upcoming |
 | M4 | — | Upcoming |
 
 ## Repository Structure
 - `M1_G02/`: Milestone 1 submission (report, video, data notes)
+- `M2_G02/`: Milestone 2 submission (report, base-paper block diagram, video, code, data notes, results)
 - `01_methods/`: CCA, sparse/graph-informed CCA, and deflation implementations (reference code)
 - `02_simulations/`: simulation experiments (reference code)
 - `03_brca/`: TCGA-BRCA survival prediction pipeline and processed data (reference code)

@@ -3,7 +3,7 @@
 **Project:** Extending a Multimodal Probabilistic Graphical Model for Breast Cancer Survival Prediction
 **Course:** CSE516 — Probabilistic Graphical Models · Instructor: Prof. Dhaval Patel
 **Track:** Applied AI
-**Group G02:** Dhanya Achari (AU2420163) · Parth Jawaharani (AU2420056) · Shifataj Shaikh (AU2420174) · Vishrut Patel (AU2340216)
+**Group G02:** Dhanya Achari (AU2420163) · Paarth Jawaharani (AU2420056) · Shifataj Shaikh (AU2420174) · Vishrut Patel (AU2340216)
 
 **Base paper:** V. Subramanian, T. Syeda-Mahmood, M. N. Do, "Modelling-based joint embedding of histology and genomics using canonical correlation analysis for breast cancer survival prediction," *Artificial Intelligence in Medicine* 149:102787, 2024. Code and data: https://github.com/svaishnavi411/modelling_cca_brca_survival
 
@@ -45,8 +45,8 @@ back to our Cox model on the authors' trained models, so it always runs.
 ```
 M2_G02/
 ├── README.md
-├── Report/        M2_G02_Report.pdf
-├── Video/         M2_G02_Video_Link.txt
+├── Report/        G2_M2_Report_Healthcare_Applied.pdf, G02_M2_Base_Paper_Block_Diagram.pdf
+├── Video/         Video.md (link to the video walkthrough)
 ├── Code/
 │   ├── README.md               setup, commands, seeds, module map
 │   ├── requirements.txt        numpy, scipy, matplotlib
