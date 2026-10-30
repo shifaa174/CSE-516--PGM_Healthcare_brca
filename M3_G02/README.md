@@ -26,6 +26,25 @@ analysis, and a revised SOTA position.
 | `Report/` | `M3_G02_Report.pdf` |
 | `Results/` | Result files, KPI tables and plots |
 
+## How the results were produced
+All runs use the existing M2 code (`M2_G02/Code/src/`) and the authors' code;
+no new code. Same 5 fixed folds, train-only standardisation and Cox penalty
+(0.1) for every method. Latent dimension d is the one chosen on validation
+C-index in M2 (CCA-MLE d = 30, EM d = 50). Run from `M2_G02/Code/src/`:
+
+```bash
+python3 paper_baseline.py --root ../../.. --out ../../../M3_G02/Results
+for s in 42 43 44 45 46; do
+  python3 run_experiments.py --root ../../.. --variant paperpca --noise block \
+    --d-from ../../Results/m2_latent_dim_sweep_paperpca.json \
+    --seed $s --out ../../../M3_G02/Results --tag paperpca_seed$s
+done
+```
+
+Seeds 42 to 46 change the EM initialisation only; CCA-MLE, the Cox model and
+the paper baselines are deterministic. Output files keep the `m2_` prefix
+written by the M2 code.
+
 ## Data
 Unchanged from M2: the processed TCGA-BRCA cohort released with the base paper,
 already in this repository under `03_brca/data/splits_journal/`. See

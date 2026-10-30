@@ -1,0 +1,577 @@
+{
+  "engine": "paper",
+  "config": {
+    "root": "../../..",
+    "engine": "auto",
+    "penalizer": 0.1,
+    "out": "../../../M3_G02/Results"
+  },
+  "environment": {
+    "python": "3.12.5",
+    "numpy": "2.5.3",
+    "platform": "macOS-27.0.1-arm64-arm-64bit"
+  },
+  "rows": [
+    {
+      "method": "PCA",
+      "setting": "genomics",
+      "rerun": {
+        "mean": 67.59,
+        "std": 7.66,
+        "per_fold": [
+          79.3,
+          69.29,
+          56.2,
+          69.84,
+          63.33
+        ]
+      },
+      "authors_stored": {
+        "mean": 67.59,
+        "std": 7.66,
+        "per_fold": [
+          79.3,
+          69.29,
+          56.2,
+          69.84,
+          63.33
+        ]
+      },
+      "arxiv_table4": {
+        "mean": 65.76,
+        "std": 9.02
+      }
+    },
+    {
+      "method": "PCA",
+      "setting": "imaging",
+      "rerun": {
+        "mean": 58.13,
+        "std": 7.97,
+        "per_fold": [
+          59.23,
+          58.23,
+          57.21,
+          70.56,
+          45.43
+        ]
+      },
+      "authors_stored": {
+        "mean": 58.13,
+        "std": 7.97,
+        "per_fold": [
+          59.23,
+          58.23,
+          57.21,
+          70.56,
+          45.43
+        ]
+      },
+      "arxiv_table4": {
+        "mean": 61.24,
+        "std": 6.39
+      }
+    },
+    {
+      "method": "PCA",
+      "setting": "concat",
+      "rerun": {
+        "mean": 66.47,
+        "std": 6.86,
+        "per_fold": [
+          75.82,
+          66.27,
+          60.39,
+          72.2,
+          57.66
+        ]
+      },
+      "authors_stored": {
+        "mean": 66.47,
+        "std": 6.86,
+        "per_fold": [
+          75.82,
+          66.27,
+          60.39,
+          72.2,
+          57.66
+        ]
+      },
+      "arxiv_table4": {
+        "mean": 66.86,
+        "std": 10.4
+      }
+    },
+    {
+      "method": "SCCA/HD",
+      "setting": "genomics",
+      "rerun": {
+        "mean": 68.67,
+        "std": 9.34,
+        "per_fold": [
+          73.77,
+          82.27,
+          70.54,
+          60.66,
+          56.11
+        ]
+      },
+      "authors_stored": {
+        "mean": 68.67,
+        "std": 9.34,
+        "per_fold": [
+          73.77,
+          82.27,
+          70.54,
+          60.66,
+          56.11
+        ]
+      },
+      "arxiv_table4": {
+        "mean": 65.95,
+        "std": 10.7
+      }
+    },
+    {
+      "method": "SCCA/HD",
+      "setting": "imaging",
+      "rerun": {
+        "mean": 53.15,
+        "std": 10.89,
+        "per_fold": [
+          49.41,
+          44.61,
+          58.37,
+          71.74,
+          41.61
+        ]
+      },
+      "authors_stored": {
+        "mean": 53.15,
+        "std": 10.89,
+        "per_fold": [
+          49.41,
+          44.61,
+          58.37,
+          71.74,
+          41.61
+        ]
+      },
+      "arxiv_table4": {
+        "mean": 54.0,
+        "std": 11.23
+      }
+    },
+    {
+      "method": "SCCA/HD",
+      "setting": "concat",
+      "rerun": {
+        "mean": 67.79,
+        "std": 8.26,
+        "per_fold": [
+          67.93,
+          77.51,
+          72.87,
+          67.67,
+          52.95
+        ]
+      },
+      "authors_stored": {
+        "mean": 67.79,
+        "std": 8.26,
+        "per_fold": [
+          67.93,
+          77.51,
+          72.87,
+          67.67,
+          52.95
+        ]
+      },
+      "arxiv_table4": {
+        "mean": 65.71,
+        "std": 7.96
+      }
+    },
+    {
+      "method": "SCCA/PD",
+      "setting": "genomics",
+      "rerun": {
+        "mean": 67.79,
+        "std": 3.89,
+        "per_fold": [
+          67.81,
+          73.58,
+          66.12,
+          69.64,
+          61.78
+        ]
+      },
+      "authors_stored": {
+        "mean": 67.79,
+        "std": 3.89,
+        "per_fold": [
+          67.81,
+          73.58,
+          66.12,
+          69.64,
+          61.78
+        ]
+      },
+      "arxiv_table4": {
+        "mean": 68.34,
+        "std": 8.4
+      }
+    },
+    {
+      "method": "SCCA/PD",
+      "setting": "imaging",
+      "rerun": {
+        "mean": 56.99,
+        "std": 9.89,
+        "per_fold": [
+          57.49,
+          45.61,
+          61.63,
+          72.72,
+          47.5
+        ]
+      },
+      "authors_stored": {
+        "mean": 56.99,
+        "std": 9.89,
+        "per_fold": [
+          57.49,
+          45.61,
+          61.63,
+          72.72,
+          47.5
+        ]
+      },
+      "arxiv_table4": {
+        "mean": 55.66,
+        "std": 11.14
+      }
+    },
+    {
+      "method": "SCCA/PD",
+      "setting": "concat",
+      "rerun": {
+        "mean": 67.58,
+        "std": 4.69,
+        "per_fold": [
+          69.61,
+          65.36,
+          70.93,
+          72.52,
+          59.5
+        ]
+      },
+      "authors_stored": {
+        "mean": 67.58,
+        "std": 4.69,
+        "per_fold": [
+          69.61,
+          65.36,
+          70.93,
+          72.52,
+          59.5
+        ]
+      },
+      "arxiv_table4": {
+        "mean": 67.37,
+        "std": 6.58
+      }
+    },
+    {
+      "method": "SCCA/OPD",
+      "setting": "genomics",
+      "rerun": {
+        "mean": 70.03,
+        "std": 7.5,
+        "per_fold": [
+          75.64,
+          81.72,
+          66.51,
+          64.79,
+          61.49
+        ]
+      },
+      "authors_stored": {
+        "mean": 70.03,
+        "std": 7.5,
+        "per_fold": [
+          75.64,
+          81.72,
+          66.51,
+          64.79,
+          61.49
+        ]
+      },
+      "arxiv_table4": {
+        "mean": 67.63,
+        "std": 9.43
+      }
+    },
+    {
+      "method": "SCCA/OPD",
+      "setting": "imaging",
+      "rerun": {
+        "mean": 55.86,
+        "std": 10.07,
+        "per_fold": [
+          53.01,
+          45.16,
+          61.55,
+          72.46,
+          47.13
+        ]
+      },
+      "authors_stored": {
+        "mean": 55.86,
+        "std": 10.07,
+        "per_fold": [
+          53.01,
+          45.16,
+          61.55,
+          72.46,
+          47.13
+        ]
+      },
+      "arxiv_table4": {
+        "mean": 54.19,
+        "std": 11.23
+      }
+    },
+    {
+      "method": "SCCA/OPD",
+      "setting": "concat",
+      "rerun": {
+        "mean": 68.98,
+        "std": 6.16,
+        "per_fold": [
+          72.9,
+          75.87,
+          69.69,
+          68.72,
+          57.73
+        ]
+      },
+      "authors_stored": {
+        "mean": 68.98,
+        "std": 6.16,
+        "per_fold": [
+          72.9,
+          75.87,
+          69.69,
+          68.72,
+          57.73
+        ]
+      },
+      "arxiv_table4": {
+        "mean": 65.25,
+        "std": 5.61
+      }
+    },
+    {
+      "method": "GN-SCCA/HD",
+      "setting": "genomics",
+      "rerun": null,
+      "authors_stored": null,
+      "arxiv_table4": null
+    },
+    {
+      "method": "GN-SCCA/HD",
+      "setting": "imaging",
+      "rerun": null,
+      "authors_stored": null,
+      "arxiv_table4": null
+    },
+    {
+      "method": "GN-SCCA/HD",
+      "setting": "concat",
+      "rerun": null,
+      "authors_stored": null,
+      "arxiv_table4": null
+    },
+    {
+      "method": "GN-SCCA/PD",
+      "setting": "genomics",
+      "rerun": {
+        "mean": 62.6,
+        "std": 10.79,
+        "per_fold": [
+          68.05,
+          71.12,
+          66.2,
+          66.3,
+          41.31
+        ]
+      },
+      "authors_stored": {
+        "mean": 62.6,
+        "std": 10.79,
+        "per_fold": [
+          68.05,
+          71.12,
+          66.2,
+          66.3,
+          41.31
+        ]
+      },
+      "arxiv_table4": {
+        "mean": 64.94,
+        "std": 8.98
+      }
+    },
+    {
+      "method": "GN-SCCA/PD",
+      "setting": "imaging",
+      "rerun": {
+        "mean": 58.1,
+        "std": 10.46,
+        "per_fold": [
+          58.3,
+          47.26,
+          64.03,
+          74.3,
+          46.61
+        ]
+      },
+      "authors_stored": {
+        "mean": 58.1,
+        "std": 10.46,
+        "per_fold": [
+          58.3,
+          47.26,
+          64.03,
+          74.3,
+          46.61
+        ]
+      },
+      "arxiv_table4": {
+        "mean": 56.81,
+        "std": 13.31
+      }
+    },
+    {
+      "method": "GN-SCCA/PD",
+      "setting": "concat",
+      "rerun": {
+        "mean": 65.47,
+        "std": 10.14,
+        "per_fold": [
+          69.86,
+          66.54,
+          70.23,
+          74.82,
+          45.88
+        ]
+      },
+      "authors_stored": {
+        "mean": 65.47,
+        "std": 10.14,
+        "per_fold": [
+          69.86,
+          66.54,
+          70.23,
+          74.82,
+          45.88
+        ]
+      },
+      "arxiv_table4": {
+        "mean": 66.42,
+        "std": 12.08
+      }
+    },
+    {
+      "method": "GN-SCCA/OPD",
+      "setting": "genomics",
+      "rerun": {
+        "mean": 63.94,
+        "std": 11.05,
+        "per_fold": [
+          70.54,
+          74.77,
+          67.75,
+          63.54,
+          43.08
+        ]
+      },
+      "authors_stored": {
+        "mean": 63.94,
+        "std": 11.05,
+        "per_fold": [
+          70.54,
+          74.77,
+          67.75,
+          63.54,
+          43.08
+        ]
+      },
+      "arxiv_table4": {
+        "mean": 65.52,
+        "std": 7.67
+      }
+    },
+    {
+      "method": "GN-SCCA/OPD",
+      "setting": "imaging",
+      "rerun": {
+        "mean": 58.86,
+        "std": 9.71,
+        "per_fold": [
+          60.16,
+          46.07,
+          62.09,
+          74.43,
+          51.55
+        ]
+      },
+      "authors_stored": {
+        "mean": 58.86,
+        "std": 9.71,
+        "per_fold": [
+          60.16,
+          46.07,
+          62.09,
+          74.43,
+          51.55
+        ]
+      },
+      "arxiv_table4": {
+        "mean": 57.87,
+        "std": 10.28
+      }
+    },
+    {
+      "method": "GN-SCCA/OPD",
+      "setting": "concat",
+      "rerun": {
+        "mean": 66.85,
+        "std": 9.47,
+        "per_fold": [
+          72.34,
+          70.48,
+          69.84,
+          73.51,
+          48.09
+        ]
+      },
+      "authors_stored": {
+        "mean": 66.85,
+        "std": 9.47,
+        "per_fold": [
+          72.34,
+          70.48,
+          69.84,
+          73.51,
+          48.09
+        ]
+      },
+      "arxiv_table4": {
+        "mean": 68.08,
+        "std": 9.88
+      }
+    }
+  ]
+}
