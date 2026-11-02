@@ -45,6 +45,35 @@ Seeds 42 to 46 change the EM initialisation only; CCA-MLE, the Cox model and
 the paper baselines are deterministic. Output files keep the `m2_` prefix
 written by the M2 code.
 
+## Ablations
+Same setup as above, changing one component at a time through existing flags
+of `run_experiments.py` (still no new code), seeds 42 to 46:
+Run the loop in bash; on macOS type `bash` first, because zsh does not split `$flag`.
+
+| Tag | Flag | Question |
+|---|---|---|
+| `abl_noise_diag` | `--noise diag` | Does the block-diagonal noise (X ⊥ Y given Z with full within-modality covariance) matter, or is diagonal noise enough? |
+| `abl_eminit_cca` | `--em-init cca` | Does starting EM from the CCA-MLE solution instead of random help? |
+| `abl_reg_1e-3`, `abl_reg_1e-1` | `--reg` | Sensitivity to the ridge regularisation of the CCA-MLE route (default 1e-2) |
+| `abl_pen_0.01`, `abl_pen_1.0` | `--penalizer` | Sensitivity to the Cox L2 penalty (default 0.1, the paper's value) |
+
+```bash
+for cfg in "abl_noise_diag:--noise diag" "abl_eminit_cca:--em-init cca" \
+           "abl_reg_1e-3:--reg 1e-3" "abl_reg_1e-1:--reg 1e-1" \
+           "abl_pen_0.01:--penalizer 0.01" "abl_pen_1.0:--penalizer 1.0"; do
+  tag=${cfg%%:*}; flag=${cfg#*:}
+  for s in 42 43 44 45 46; do
+    python3 run_experiments.py --root ../../.. --variant paperpca \
+      --d-from ../../Results/m2_latent_dim_sweep_paperpca.json \
+      --seed $s --out ../../../M3_G02/Results --tag ${tag}_seed$s $flag
+  done
+done
+```
+
+The latent-dimension ablation is the d sweep already reported in M2
+(`M2_G02/Results/m2_latent_dim_sweep_paperpca.json`). The modality ablation
+(both, genomics only, histology only) is part of every run above.
+
 ## Data
 Unchanged from M2: the processed TCGA-BRCA cohort released with the base paper,
 already in this repository under `03_brca/data/splits_journal/`. See
