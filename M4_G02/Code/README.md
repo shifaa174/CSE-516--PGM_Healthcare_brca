@@ -85,4 +85,14 @@ python M4_G02/Code/src/plot_m3_results.py --analysis M4_G02/Results/analysis \
   --robustness M4_G02/Results/robustness --out M4_G02/Results/plots
 ```
 
+**5. Final statistics and probability quality**
+```bash
+python M4_G02/Code/src/final_stats.py --results M3_G02/Results --out M4_G02/Results/stats
+python M4_G02/Code/src/probability_quality.py --root . --out M4_G02/Results/probability_quality
+```
+`final_stats.py` gives mean, SD and 95% CI per method, and paired t-test and
+Wilcoxon tests across the 5 folds (seed results averaged per fold).
+`probability_quality.py` gives held-out partial NLL, Brier score at 3 and 5 years,
+integrated Brier score and calibration (reliability plot, ECE).
+
 All outputs are written to `M4_G02/Results/`.

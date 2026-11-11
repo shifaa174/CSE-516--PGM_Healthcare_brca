@@ -1,0 +1,5 @@
+method,c_index_mean,c_index_std,test_partial_nll_per_sample_mean,test_partial_nll_per_sample_std,integrated_brier_mean,integrated_brier_std,brier_1095d_mean,brier_1095d_std,brier_1826d_mean,brier_1826d_std
+CCA-MLE,65.6409,7.4958,0.3327,0.0397,0.0461,0.0085,0.0814,0.014,0.1514,0.0242
+EM,63.9958,9.1915,0.3445,0.0414,0.0476,0.0084,0.0856,0.0136,0.1631,0.0253
+CCA-MLE diagonal,68.2784,8.1057,0.3291,0.0412,0.0457,0.0089,0.0803,0.0149,0.1447,0.0304
+Non-PGM PCA baseline,66.5667,7.7427,0.3362,0.0386,0.0469,0.0092,0.0832,0.017,0.1528,0.0276
