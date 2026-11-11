@@ -1,0 +1,42 @@
+{
+  "root": "/Users/paarthjawaharani/CSE-516--PGM_Healthcare_brca",
+  "variant": "paperpca",
+  "folds": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "methods": [
+    "cca-mle",
+    "em"
+  ],
+  "d_cca": 30,
+  "d_em": 50,
+  "seed": 42,
+  "noise_model": "block",
+  "reg": 0.01,
+  "cox_penalizer": 0.1,
+  "em_iters": 300,
+  "missing_rates": [
+    0.0,
+    0.1,
+    0.25,
+    0.5
+  ],
+  "noise_levels": [
+    0.0,
+    0.1,
+    0.25,
+    0.5,
+    1.0
+  ],
+  "train_fractions": [
+    0.25,
+    0.5,
+    0.75,
+    1.0
+  ],
+  "out": "/Users/paarthjawaharani/CSE-516--PGM_Healthcare_brca/M4_G02/Results/robustness"
+}
