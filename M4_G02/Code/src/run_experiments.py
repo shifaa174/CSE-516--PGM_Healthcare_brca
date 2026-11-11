@@ -175,7 +175,7 @@ def main():
         "summary": summarise(all_res),
     }
     tag = args.tag or f"{args.variant}_{args.noise}"
-    path = os.path.join(out, f"m2_results_{tag}.json")
+    path = os.path.join(out, f"results_{tag}.json")
     with open(path, "w", encoding="utf-8") as fh:
         json.dump(payload, fh, indent=2)
 

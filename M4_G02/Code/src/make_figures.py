@@ -246,20 +246,20 @@ def fig6_paper_comparison(pb, pp, out):
 if __name__ == "__main__":
     out = os.path.abspath(sys.argv[1] if len(sys.argv) > 1 else "../../Results")
     j = lambda n: json.load(open(os.path.join(out, n), encoding="utf-8")) if os.path.exists(os.path.join(out, n)) else None
-    res = j("m2_results_main.json")
+    res = j("results_main.json")
     fig1_graphical_model(out)
     if res:
         fig2_em_convergence(res, out)
         fig3_cindex(res, out)
         fig5_entropy(res, out)
-    pp = j("m2_results_paperpca.json")
+    pp = j("results_paperpca.json")
     if pp:
         fig3_cindex(pp, out, "fig3b_cindex_paper_input.png")
     for tag, name in (("main", "fig4_latent_dim_sweep.png"), ("paperpca", "fig4b_latent_dim_sweep_paper_input.png")):
-        sw = j(f"m2_latent_dim_sweep_{tag}.json") or (j("m2_latent_dim_sweep.json") if tag == "main" else None)
+        sw = j(f"latent_dim_sweep_{tag}.json") or (j("latent_dim_sweep.json") if tag == "main" else None)
         if sw:
             fig4_latent_dim(sw, out, name)
-    pb = j("m2_paper_baseline.json")
+    pb = j("paper_baseline.json")
     if pb:
         fig6_paper_comparison(pb, pp, out)
     print("figures written to", out)

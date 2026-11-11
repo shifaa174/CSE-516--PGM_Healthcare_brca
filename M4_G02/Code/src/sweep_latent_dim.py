@@ -74,7 +74,7 @@ def main():
     for meth in ("cca-mle", "em"):
         cand = {d: summary[f"{meth}/d={d}"]["valid_c_index_mean"] for d in args.grid}
         chosen[meth] = int(max(cand, key=cand.get))
-    name = "m2_latent_dim_sweep" + (f"_{args.tag}" if args.tag else "") + ".json"
+    name = "latent_dim_sweep" + (f"_{args.tag}" if args.tag else "") + ".json"
     path = os.path.join(out, name)
     with open(path, "w", encoding="utf-8") as fh:
         json.dump({"config": vars(args), "rows": rows, "summary": summary,

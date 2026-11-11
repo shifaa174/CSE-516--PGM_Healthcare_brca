@@ -68,11 +68,11 @@ def em_convergence(res):
 
 
 def main():
-    main_res, pp, pb = j("m2_results_main.json"), j("m2_results_paperpca.json"), j("m2_paper_baseline.json")
-    sw_main = j("m2_latent_dim_sweep_main.json") or j("m2_latent_dim_sweep.json")
-    sw_pp = j("m2_latent_dim_sweep_paperpca.json")
+    main_res, pp, pb = j("results_main.json"), j("results_paperpca.json"), j("paper_baseline.json")
+    sw_main = j("latent_dim_sweep_main.json") or j("latent_dim_sweep.json")
+    sw_pp = j("latent_dim_sweep_paperpca.json")
     env = (main_res or pp or {}).get("environment", {})
-    L = ["# Initial KPI results — M2_G02\n"]
+    L = ["# KPI results — M4_G02\n"]
     L.append(f"Software used for this run: Python {env.get('python', '?')}, numpy {env.get('numpy', '?')}. "
              f"Runs on Windows, macOS and Linux. Regenerate everything from the `Code` folder with "
              f"`python run_all.py ../..` (or `bash run_all.sh ../..`).\n")
@@ -202,11 +202,11 @@ def main():
             v = r["rerun"]
             rows.append(["paper_baseline", f"{r['method']}/{r['setting']}", v["mean"] if v else "", v["std"] if v else "",
                          " / ".join(f"{x:.2f}" for x in v["per_fold"]) if v else "failed"])
-    with open(os.path.join(OUT, "m2_kpi_table.csv"), "w", newline="", encoding="utf-8") as fh:
+    with open(os.path.join(OUT, "kpi_table.csv"), "w", newline="", encoding="utf-8") as fh:
         w = csv.writer(fh)
         w.writerow(["input", "kpi", "mean", "std", "per_fold"])
         w.writerows(rows)
-    print("wrote", os.path.join(OUT, "SUMMARY.md"), "and m2_kpi_table.csv")
+    print("wrote", os.path.join(OUT, "SUMMARY.md"), "and kpi_table.csv")
 
 
 if __name__ == "__main__":

@@ -1,9 +1,3 @@
-#!/usr/bin/env python3
-"""Aggregate existing M3 JSON runs into CSV/Markdown tables and exploratory tests.
-
-Run from repository root:
-  python M3_Analysis_Code/aggregate_results.py --results M3_G02/Results --out M3_G02/Results/analysis
-"""
 import argparse, json, re
 from pathlib import Path
 import numpy as np
@@ -28,8 +22,8 @@ def experiment_group(path, cfg):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--results", default="M3_G02/Results")
-    ap.add_argument("--out", default="M3_G02/Results/analysis")
+    ap.add_argument("--results", default="M4_G02/Results")
+    ap.add_argument("--out", default="M4_G02/Results/analysis")
     args = ap.parse_args()
     src, out = Path(args.results), Path(args.out)
     out.mkdir(parents=True, exist_ok=True)
@@ -45,6 +39,8 @@ def main():
         if not obj.get("per_fold") or not obj.get("summary"):
             continue
         group = experiment_group(path, cfg)
+        if not re.search(r"_seed\d+$", str(cfg.get("tag") or path.stem)):
+            continue
         seed = cfg.get("seed", np.nan)
         for metric in METRICS:
             summary = obj["summary"].get(metric)
@@ -80,7 +76,6 @@ def main():
                 if value is not None:
                     fold_rows.append({**base, "metric": metric, "value": value})
 
-        # Paired method comparison within each run, across the same five folds.
         for outcome in ("multimodal", "genomics_only", "histology_only"):
             a = [f.get("cca-mle", {}).get(outcome, {}).get("c_index") for f in obj["per_fold"]]
             b = [f.get("em", {}).get(outcome, {}).get("c_index") for f in obj["per_fold"]]
@@ -114,7 +109,6 @@ def main():
     folds.to_csv(out / "fold_level_metrics.csv", index=False)
     paired.to_csv(out / "paired_tests_exploratory.csv", index=False)
 
-    # Aggregate distinct runs within each experimental condition.
     agg = (runs.groupby(["experiment", "metric"], dropna=False)
            .agg(n_json_runs=("file", "nunique"),
                 mean_of_run_means=("mean_over_folds", "mean"),
@@ -123,14 +117,13 @@ def main():
            .reset_index())
     agg.to_csv(out / "experiment_summary.csv", index=False)
 
-    # A compact, human-readable KPI table.
     c = agg[agg.metric.str.startswith("c_index/")].copy()
-    c["mean_pct"] = 100*c["mean_of_run_means"]
-    c["sd_between_runs_pct"] = 100*c["sd_of_run_means"]
+    c["mean_pct"] = c["mean_of_run_means"]
+    c["sd_between_runs_pct"] = c["sd_of_run_means"]
     c.to_csv(out / "cindex_summary_percent.csv", index=False)
 
     readme = [
-        "# M3 results aggregation",
+        "# Results aggregation",
         "",
         "Generated from existing JSON result files. No experiment was rerun.",
         "",

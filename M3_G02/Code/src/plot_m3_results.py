@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-"""Create report-ready plots from aggregate and robustness CSV outputs."""
 import argparse
 from pathlib import Path
 import pandas as pd

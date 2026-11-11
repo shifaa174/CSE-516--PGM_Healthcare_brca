@@ -159,7 +159,7 @@ def main():
                "environment": {"python": platform.python_version(), "numpy": np.__version__,
                                "platform": platform.platform()},
                "rows": rows}
-    path = os.path.join(out, "m2_paper_baseline.json")
+    path = os.path.join(out, "paper_baseline.json")
     json.dump(payload, open(path, "w", encoding="utf-8"), indent=2)
 
     f = lambda d: "    failed    " if d is None else f"{d['mean']:6.2f} ± {d['std']:5.2f}"

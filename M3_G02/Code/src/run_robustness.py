@@ -1,11 +1,3 @@
-#!/usr/bin/env python3
-"""Run additional missing-modality, observation-noise and training-size experiments.
-
-Run from repository root:
-  python M3_Analysis_Code/run_robustness.py --root . --variant paperpca --out M3_G02/Results/robustness
-
-Uses the existing M2 data.py, pcca.py and survival.py without modifying them.
-"""
 import argparse, csv, json, sys, time
 from pathlib import Path
 import numpy as np
@@ -21,7 +13,6 @@ def load_modules(root):
     return load_fold, standardise, ProbabilisticCCA, CoxPH, c_index
 
 def posterior_rows(model, X, Y, mode):
-    """Infer one patient at a time so each row can have a different observed modality."""
     z = []
     for i in range(len(X)):
         if mode == "both":
@@ -93,15 +84,12 @@ def main():
             cox = CoxPH(penalizer=args.cox_penalizer).fit(
                 Ztr, tr["times"], tr["events"])
 
-            # Reference: complete paired modalities.
             ref = score(model, cox, te["X"], te["Y"], te["times"],
                         te["events"], "both", c_index)
             rows.append(dict(fold=fold, method=method, experiment="reference",
                              level=0.0, c_index=ref, fit_seconds=fit_seconds,
                              n_train=len(tr["times"]), d=d))
 
-            # Missing-modality robustness. For each rate, randomly choose patients
-            # whose genomic OR histology modality is hidden, balanced by random draw.
             for rate in args.missing_rates:
                 rng = np.random.default_rng(args.seed + 1000*fold + int(rate*10000))
                 n = len(te["times"])
@@ -125,7 +113,6 @@ def main():
                                  level=rate, c_index=ci, fit_seconds=fit_seconds,
                                  n_train=len(tr["times"]), d=d))
 
-            # Observation-noise robustness. Standardised inputs have unit-ish SD.
             for level in args.noise_levels:
                 rng = np.random.default_rng(args.seed + 2000*fold + int(level*10000))
                 Xn = te["X"] + rng.normal(0, level, te["X"].shape)
@@ -137,7 +124,6 @@ def main():
                                  level=level, c_index=ci, fit_seconds=fit_seconds,
                                  n_train=len(tr["times"]), d=d))
 
-            # Training-size sensitivity. Keep the original held-out test fold fixed.
             for fraction in args.train_fractions:
                 if not (0 < fraction <= 1):
                     raise ValueError("Training fractions must be in (0,1].")
@@ -146,7 +132,6 @@ def main():
                 ix = rng.choice(len(tr["times"]), size=min(nsub,len(tr["times"])),
                                 replace=False)
                 sub = {k: tr[k][ix] for k in ("X","Y","times","events")}
-                # Guard against latent dimensions exceeding available sample rank.
                 dsub = min(d, sub["X"].shape[1], sub["Y"].shape[1], len(ix)-1)
                 msub = ProbabilisticCCA(d=dsub, reg=args.reg,
                                         random_state=args.seed+fold,
@@ -167,7 +152,6 @@ def main():
                                  fit_seconds=np.nan, n_train=len(ix), d=dsub))
             print(f"Fold {fold}, {method}: completed", flush=True)
 
-    # Write raw rows and mean +/- SD across fixed folds for each condition.
     raw_path = out / "robustness_per_fold.csv"
     with raw_path.open("w", newline="", encoding="utf-8") as f:
         w = csv.DictWriter(f, fieldnames=list(rows[0].keys()))

@@ -12,12 +12,14 @@ Cox survival model, compared against the base paper's baselines.
 | `src/survival.py` | Cox proportional hazards and C-index |
 | `src/data.py` | Data loading and standardisation |
 | `src/paper_baseline.py` | Paper baselines (PCA, SCCA, GN-SCCA) |
-| `src/run_experiments.py` | Main experiments |
 | `src/sweep_latent_dim.py` | Latent-dimension selection |
+| `src/run_experiments.py` | Main experiments and ablations |
 | `src/run_robustness.py` | Missing modality, noise and training-size experiments |
-| `src/aggregate_results.py` | Result tables and paired tests |
-| `src/make_figures.py`, `src/plot_m3_results.py`, `src/write_summary.py` | Plots and summaries |
-| `run_all.py`, `run_all.sh` | Run the base pipeline end to end |
+| `src/aggregate_results.py` | Result tables and exploratory paired tests |
+| `src/final_stats.py` | Mean, SD, 95% CI, paired t-test and Wilcoxon |
+| `src/probability_quality.py` | NLL, Brier score and calibration |
+| `src/make_figures.py`, `src/plot_results.py`, `src/write_summary.py` | Plots, KPI table and summary |
+| `run_all.py` | Runs everything above in order |
 
 ## Environment
 
@@ -32,67 +34,36 @@ pip install pandas tabulate
 ## Seeds and settings
 
 - Data: 5 fixed folds (585 train / 146 validation / 243 test)
-- Seeds 42 to 46 (EM initialisation)
-- Latent dimension: CCA-MLE d = 30, EM d = 50 (chosen on validation C-index)
+- Seeds 42 to 46 (EM initialisation); CCA-MLE, Cox and the paper baselines are deterministic
+- Latent dimension: chosen on validation C-index (CCA-MLE d = 30, EM d = 50)
 - Cox penalty 0.1, ridge 1e-2, EM max 300 iterations, tolerance 1e-7
 
-## Run
+## Reproduce every result
 
-All commands from the repository root.
+One command, from the repository root (about 6 to 10 minutes):
 
-**1. Base pipeline (baselines, latent-dimension sweep, first results)**
 ```bash
-cd M4_G02/Code && python run_all.py ../.. && cd ../..
+python M4_G02/Code/run_all.py .
 ```
 
-**2. Main results over 5 seeds** (in bash)
+It runs, in order, writing everything to `M4_G02/Results/`:
+
+1. Paper baselines
+2. Latent-dimension sweep (paper PCA input)
+3. Latent-dimension sweep and PGM (reduced input)
+4. Main results, 5 seeds x 5 folds
+5. Ablations: diagonal noise, CCA-initialised EM, ridge 1e-3 and 1e-1, Cox penalty 0.01 and 1.0
+6. Robustness: missing modality, observation noise, training size
+7. Aggregated tables and exploratory paired tests
+8. Final statistics: 95% CI, paired t-test, Wilcoxon
+9. Probability quality: NLL, Brier score, calibration
+10. Figures, KPI table and summary
+
+Any step can be run on its own from `M4_G02/Code/src`, for example:
+
 ```bash
-cd M4_G02/Code/src
-bash
-python paper_baseline.py --root ../../.. --out ../../Results
-for s in 42 43 44 45 46; do
-  python run_experiments.py --root ../../.. --variant paperpca --noise block \
-    --d-from ../../Results/m2_latent_dim_sweep_paperpca.json \
-    --seed $s --out ../../Results --tag paperpca_seed$s
-done
-exit
-cd ../../..
+python final_stats.py --results ../../Results --out ../../Results/stats
+python probability_quality.py --root ../../.. --out ../../Results/probability_quality
 ```
 
-**3. Ablations** (in bash)
-```bash
-cd M4_G02/Code/src
-bash
-for cfg in "abl_noise_diag:--noise diag" "abl_eminit_cca:--em-init cca" \
-           "abl_reg_1e-3:--reg 1e-3" "abl_reg_1e-1:--reg 1e-1" \
-           "abl_pen_0.01:--penalizer 0.01" "abl_pen_1.0:--penalizer 1.0"; do
-  tag=${cfg%%:*}; flag=${cfg#*:}
-  for s in 42 43 44 45 46; do
-    python run_experiments.py --root ../../.. --variant paperpca \
-      --d-from ../../Results/m2_latent_dim_sweep_paperpca.json \
-      --seed $s --out ../../Results --tag ${tag}_seed$s $flag
-  done
-done
-exit
-cd ../../..
-```
-
-**4. Robustness, tables and plots**
-```bash
-python M4_G02/Code/src/run_robustness.py --root . --out M4_G02/Results/robustness
-python M4_G02/Code/src/aggregate_results.py --results M4_G02/Results --out M4_G02/Results/analysis
-python M4_G02/Code/src/plot_m3_results.py --analysis M4_G02/Results/analysis \
-  --robustness M4_G02/Results/robustness --out M4_G02/Results/plots
-```
-
-**5. Final statistics and probability quality**
-```bash
-python M4_G02/Code/src/final_stats.py --results M3_G02/Results --out M4_G02/Results/stats
-python M4_G02/Code/src/probability_quality.py --root . --out M4_G02/Results/probability_quality
-```
-`final_stats.py` gives mean, SD and 95% CI per method, and paired t-test and
-Wilcoxon tests across the 5 folds (seed results averaged per fold).
-`probability_quality.py` gives held-out partial NLL, Brier score at 3 and 5 years,
-integrated Brier score and calibration (reliability plot, ECE).
-
-All outputs are written to `M4_G02/Results/`.
+On another machine, C-index can differ in the second decimal place; conclusions are unchanged.

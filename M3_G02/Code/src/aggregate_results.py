@@ -1,9 +1,3 @@
-#!/usr/bin/env python3
-"""Aggregate existing M3 JSON runs into CSV/Markdown tables and exploratory tests.
-
-Run from repository root:
-  python M3_Analysis_Code/aggregate_results.py --results M3_G02/Results --out M3_G02/Results/analysis
-"""
 import argparse, json, re
 from pathlib import Path
 import numpy as np
@@ -80,7 +74,6 @@ def main():
                 if value is not None:
                     fold_rows.append({**base, "metric": metric, "value": value})
 
-        # Paired method comparison within each run, across the same five folds.
         for outcome in ("multimodal", "genomics_only", "histology_only"):
             a = [f.get("cca-mle", {}).get(outcome, {}).get("c_index") for f in obj["per_fold"]]
             b = [f.get("em", {}).get(outcome, {}).get("c_index") for f in obj["per_fold"]]
@@ -114,7 +107,6 @@ def main():
     folds.to_csv(out / "fold_level_metrics.csv", index=False)
     paired.to_csv(out / "paired_tests_exploratory.csv", index=False)
 
-    # Aggregate distinct runs within each experimental condition.
     agg = (runs.groupby(["experiment", "metric"], dropna=False)
            .agg(n_json_runs=("file", "nunique"),
                 mean_of_run_means=("mean_over_folds", "mean"),
@@ -123,7 +115,6 @@ def main():
            .reset_index())
     agg.to_csv(out / "experiment_summary.csv", index=False)
 
-    # A compact, human-readable KPI table.
     c = agg[agg.metric.str.startswith("c_index/")].copy()
     c["mean_pct"] = 100*c["mean_of_run_means"]
     c["sd_between_runs_pct"] = 100*c["sd_of_run_means"]

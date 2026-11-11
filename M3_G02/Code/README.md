@@ -13,7 +13,7 @@ python -m pip install -r M2_G02/Code/requirements.txt pandas tabulate
 ## 2. Aggregate the existing M3 JSON files
 
 ```bash
-python M3_Analysis_Code/aggregate_results.py \
+python M3_G02/Code/src/aggregate_results.py \
   --results M3_G02/Results \
   --out M3_G02/Results/analysis
 ```
@@ -39,7 +39,7 @@ The five folds are fixed, and seeds 42-46 change EM initialisation only. Therefo
 ## 3. Run additional robustness experiments
 
 ```bash
-python M3_Analysis_Code/run_robustness.py \
+python M3_G02/Code/src/run_robustness.py \
   --root . \
   --variant paperpca \
   --folds 0 1 2 3 4 \
@@ -67,7 +67,7 @@ Important: in the training-size experiment, latent dimension is reduced only if 
 ## 4. Generate plots
 
 ```bash
-python M3_Analysis_Code/plot_m3_results.py \
+python M3_G02/Code/src/plot_m3_results.py \
   --analysis M3_G02/Results/analysis \
   --robustness M3_G02/Results/robustness \
   --out M3_G02/Results/plots
@@ -77,13 +77,13 @@ python M3_Analysis_Code/plot_m3_results.py \
 
 ```bash
 # A. Analyse existing JSONs first
-python M3_Analysis_Code/aggregate_results.py
+python M3_G02/Code/src/aggregate_results.py
 
 # B. Run additional robustness tests
-python M3_Analysis_Code/run_robustness.py --root .
+python M3_G02/Code/src/run_robustness.py --root .
 
 # C. Generate plots
-python M3_Analysis_Code/plot_m3_results.py
+python M3_G02/Code/src/plot_m3_results.py
 ```
 
 ## 6. Outputs to inspect before writing the report

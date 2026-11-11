@@ -10,7 +10,7 @@ PAPER_SETTING = {"multimodal": "concat", "genomics_only": "genomics", "histology
 
 
 def fold_values(results, tag):
-    files = sorted(glob.glob(os.path.join(results, f"m2_results_{tag}_seed*.json")))
+    files = sorted(glob.glob(os.path.join(results, f"results_{tag}_seed*.json")))
     if not files:
         return None
     runs = [json.load(open(f, encoding="utf-8"))["per_fold"] for f in files]
@@ -27,7 +27,7 @@ def fold_values(results, tag):
 
 
 def paper_values(results):
-    rows = json.load(open(os.path.join(results, "m2_paper_baseline.json"), encoding="utf-8"))["rows"]
+    rows = json.load(open(os.path.join(results, "paper_baseline.json"), encoding="utf-8"))["rows"]
     out = {}
     for r in rows:
         if r["rerun"] and r["rerun"].get("per_fold"):
@@ -58,7 +58,7 @@ def paired(name_a, a, name_b, b):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--results", default="M3_G02/Results")
+    ap.add_argument("--results", default="M4_G02/Results")
     ap.add_argument("--out", default="M4_G02/Results/stats")
     args = ap.parse_args()
     os.makedirs(args.out, exist_ok=True)

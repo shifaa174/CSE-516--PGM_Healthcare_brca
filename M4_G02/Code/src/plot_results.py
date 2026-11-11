@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-"""Create report-ready plots from aggregate and robustness CSV outputs."""
 import argparse
 from pathlib import Path
 import pandas as pd
@@ -9,9 +7,9 @@ import matplotlib.pyplot as plt
 
 def main():
     ap=argparse.ArgumentParser()
-    ap.add_argument("--analysis", default="M3_G02/Results/analysis")
-    ap.add_argument("--robustness", default="M3_G02/Results/robustness")
-    ap.add_argument("--out", default="M3_G02/Results/plots")
+    ap.add_argument("--analysis", default="M4_G02/Results/analysis")
+    ap.add_argument("--robustness", default="M4_G02/Results/robustness")
+    ap.add_argument("--out", default="M4_G02/Results/plots")
     a=ap.parse_args()
     out=Path(a.out); out.mkdir(parents=True,exist_ok=True)
     analysis=Path(a.analysis)
@@ -22,15 +20,15 @@ def main():
         for outcome in ("multimodal","genomics_only","histology_only"):
             sub=df[df.metric.str.endswith(outcome)]
             if sub.empty: continue
-            fig,ax=plt.subplots(figsize=(10,5))
+            fig,ax=plt.subplots(figsize=(12,5.5))
             x=range(len(sub))
             means=sub.mean_pct.to_numpy()
-            errs=sub.mean_fold_sd.to_numpy()*100
+            errs=sub.mean_fold_sd.to_numpy()
             ax.bar(list(x),means,yerr=errs,capsize=4)
             ax.set_xticks(list(x))
-            ax.set_xticklabels(sub.experiment.tolist(),rotation=35,ha="right")
+            ax.set_xticklabels([f"{e} | {m.split('/')[1].replace('baseline_pca_','PCA baseline').replace('_only','')}" if m.count('/')==2 else f"{e} | PCA baseline" for e,m in zip(sub.experiment,sub.metric)],rotation=40,ha="right",fontsize=8)
             ax.set_ylabel("C-index (%)")
-            ax.set_title(f"M3 C-index comparison: {outcome.replace('_',' ')}")
+            ax.set_title(f"C-index by experiment: {outcome.replace('_',' ')}")
             ax.grid(axis="y",alpha=.25)
             fig.tight_layout()
             fig.savefig(out/f"cindex_{outcome}.png",dpi=220)
